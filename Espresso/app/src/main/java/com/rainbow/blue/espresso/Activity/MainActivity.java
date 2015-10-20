@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rainbow.blue.espresso.R;
+import com.rainbow.blue.espresso.chart.LineChartActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.action_pic) {
             startActivity(new Intent(MainActivity.this, LocalImageActivity.class));
+            return true;
+        }
+        if (id == R.id.action_line) {
+            startActivity(new Intent(MainActivity.this, LineChartActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

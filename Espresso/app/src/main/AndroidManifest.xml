@@ -65,6 +65,7 @@
         <activity android:name=".Activity.CollapsedActivity" />
         <activity android:name=".Activity.GraphicViewActivity" />
         <activity android:name=".Activity.LocalImageActivity" />
+        <activity android:name=".chart.LineChartActivity"/>
     </application>
 
 </manifest>
