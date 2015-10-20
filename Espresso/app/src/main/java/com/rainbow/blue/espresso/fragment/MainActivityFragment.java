@@ -82,6 +82,21 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
         return rootView;
     }
 
+    private void fetchData() {
+        Volley.newRequestQueue(getContext()).add(new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d(tag, "onResponse:" + response.toString());
+                adapter.refresh(Message.createMessage(response));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(tag, "onErrorResponse:" + error.toString());
+            }
+        }));
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -92,6 +107,7 @@ public class MainActivityFragment extends Fragment implements View.OnClickListen
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.d("main", "onActivityCreated");
+        fetchData();
     }
 
     @Override

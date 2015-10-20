@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.rainbow.blue.espresso.Activity.WebviewActivity">
+    tools:context="com.rainbow.blue.espresso.view.WebviewActivity">
 
 
     <com.rainbow.blue.espresso.widget.InjectWebview

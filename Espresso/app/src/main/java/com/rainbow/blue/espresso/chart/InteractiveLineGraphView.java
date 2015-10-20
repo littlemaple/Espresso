@@ -32,6 +32,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.EdgeEffectCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -39,44 +40,42 @@ import android.view.View;
 import android.widget.OverScroller;
 
 import com.rainbow.blue.espresso.R;
+import com.rainbow.blue.espresso.util.ChartUtil;
 
 /**
  * A view representing a simple yet interactive line chart for the function <code>x^3 - x/4</code>.
- * <p>
+ * <p/>
  * This view isn't all that useful on its own; rather it serves as an example of how to correctly
  * implement these types of gestures to perform zooming and scrolling with interesting content
  * types.
- * <p>
+ * <p/>
  * The view is interactive in that it can be zoomed and panned using
  * typical <a href="http://developer.android.com/design/patterns/gestures.html">gestures</a> such
  * as double-touch, drag, pinch-open, and pinch-close. This is done using the
  * {@link ScaleGestureDetector}, {@link GestureDetector}, and {@link OverScroller} classes. Note
  * that the platform-provided view scrolling behavior (e.g. {@link View#scrollBy(int, int)} is NOT
  * used.
- * <p>
+ * <p/>
  * The view also demonstrates the correct use of
  * <a href="http://developer.android.com/design/style/touch-feedback.html">touch feedback</a> to
  * indicate to users that they've reached the content edges after a pan or fling gesture. This
  * is done using the {@link EdgeEffectCompat} class.
- * <p>
+ * <p/>
  * Finally, this class demonstrates the basics of creating a custom view, including support for
  * custom attributes (see the constructors), a simple implementation for
  * {@link #onMeasure(int, int)}, an implementation for {@link #onSaveInstanceState()} and a fairly
  * straightforward {@link Canvas}-based rendering implementation in
  * {@link #onDraw(Canvas)}.
- * <p>
+ * <p/>
  * Note that this view doesn't automatically support directional navigation or other accessibility
  * methods. Activities using this view should generally provide alternate navigation controls.
  * Activities using this view should also present an alternate, text-based representation of this
  * view's content for vision-impaired users.
  */
+@SuppressWarnings("ALL")
 public class InteractiveLineGraphView extends View {
-    private static final String TAG = "InteractiveLineGraphView";
+    private static final String TAG = "Interactive";
 
-    /**
-     * The number of individual points (samples) in the chart series to draw onscreen.
-     */
-    private static final int DRAW_STEPS = 30;
 
     /**
      * Initial fling velocity for pan operations, in screen widths (or heights) per second.
@@ -101,12 +100,15 @@ public class InteractiveLineGraphView extends View {
     private static final float AXIS_X_MAX = 1f;
     private static final float AXIS_Y_MIN = -1f;
     private static final float AXIS_Y_MAX = 1f;
-
+    // Buffers for storing current X and Y stops. See the computeAxisStops method for more details.
+    private final AxisStops mXStopsBuffer = new AxisStops();
+    private final AxisStops mYStopsBuffer = new AxisStops();
+    private final char[] mLabelBuffer = new char[100];
     /**
      * The current viewport. This rectangle represents the currently visible chart domain
      * and range. The currently visible chart X values are from this rectangle's left to its right.
      * The currently visible chart Y values are from this rectangle's top to its bottom.
-     * <p>
+     * <p/>
      * Note that this rectangle's top is actually the smaller Y value, and its bottom is the larger
      * Y value. Since the chart is drawn onscreen in such a way that chart Y values increase
      * towards the top of the screen (decreasing pixel Y positions), this rectangle's "top" is drawn
@@ -115,7 +117,6 @@ public class InteractiveLineGraphView extends View {
      * @see #mContentRect
      */
     private RectF mCurrentViewport = new RectF(AXIS_X_MIN, AXIS_Y_MIN, AXIS_X_MAX, AXIS_Y_MAX);
-
     /**
      * The current destination rectangle (in pixel coordinates) into which the chart data should
      * be drawn. Chart labels are drawn outside this area.
@@ -123,529 +124,7 @@ public class InteractiveLineGraphView extends View {
      * @see #mCurrentViewport
      */
     private Rect mContentRect = new Rect();
-
-    // Current attribute values and Paints.
-    private float mLabelTextSize;
-    private int mLabelSeparation;
-    private int mLabelTextColor;
-    private Paint mLabelTextPaint;
-    private int mMaxLabelWidth;
-    private int mLabelHeight;
-    private float mGridThickness;
-    private int mGridColor;
-    private Paint mGridPaint;
-    private float mAxisThickness;
-    private int mAxisColor;
-    private Paint mAxisPaint;
-    private float mDataThickness;
-    private int mDataColor;
-    private Paint mDataPaint;
-
-    // State objects and values related to gesture tracking.
-    private ScaleGestureDetector mScaleGestureDetector;
-    private GestureDetectorCompat mGestureDetector;
-    private OverScroller mScroller;
-    private Zoomer mZoomer;
-    private PointF mZoomFocalPoint = new PointF();
-    private RectF mScrollerStartViewport = new RectF(); // Used only for zooms and flings.
-
-    // Edge effect / overscroll tracking objects.
-    private EdgeEffectCompat mEdgeEffectTop;
-    private EdgeEffectCompat mEdgeEffectBottom;
-    private EdgeEffectCompat mEdgeEffectLeft;
-    private EdgeEffectCompat mEdgeEffectRight;
-
-    private boolean mEdgeEffectTopActive;
-    private boolean mEdgeEffectBottomActive;
-    private boolean mEdgeEffectLeftActive;
-    private boolean mEdgeEffectRightActive;
-
-    // Buffers for storing current X and Y stops. See the computeAxisStops method for more details.
-    private final AxisStops mXStopsBuffer = new AxisStops();
-    private final AxisStops mYStopsBuffer = new AxisStops();
-
-    // Buffers used during drawing. These are defined as fields to avoid allocation during
-    // draw calls.
-    private float[] mAxisXPositionsBuffer = new float[]{};
-    private float[] mAxisYPositionsBuffer = new float[]{};
-    private float[] mAxisXLinesBuffer = new float[]{};
-    private float[] mAxisYLinesBuffer = new float[]{};
-    private float[] mSeriesLinesBuffer = new float[(DRAW_STEPS + 1) * 4];
-    private final char[] mLabelBuffer = new char[100];
-    private Point mSurfaceSizeBuffer = new Point();
-
-    /**
-     * The simple math function Y = fun(X) to draw on the chart.
-     * @param x The X value
-     * @return The Y value
-     */
-    protected static float fun(float x) {
-        return (float) Math.pow(x, 3) - x / 4;
-    }
-
-    public InteractiveLineGraphView(Context context) {
-        this(context, null, 0);
-    }
-
-    public InteractiveLineGraphView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public InteractiveLineGraphView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.InteractiveLineGraphView, defStyle, defStyle);
-
-        try {
-            mLabelTextColor = a.getColor(
-                    R.styleable.InteractiveLineGraphView_labelTextColor, mLabelTextColor);
-            mLabelTextSize = a.getDimension(
-                    R.styleable.InteractiveLineGraphView_labelTextSize, mLabelTextSize);
-            mLabelSeparation = a.getDimensionPixelSize(
-                    R.styleable.InteractiveLineGraphView_labelSeparation, mLabelSeparation);
-
-            mGridThickness = a.getDimension(
-                    R.styleable.InteractiveLineGraphView_gridThickness, mGridThickness);
-            mGridColor = a.getColor(
-                    R.styleable.InteractiveLineGraphView_gridColor, mGridColor);
-
-            mAxisThickness = a.getDimension(
-                    R.styleable.InteractiveLineGraphView_axisThickness, mAxisThickness);
-            mAxisColor = a.getColor(
-                    R.styleable.InteractiveLineGraphView_axisColor, mAxisColor);
-
-            mDataThickness = a.getDimension(
-                    R.styleable.InteractiveLineGraphView_dataThickness, mDataThickness);
-            mDataColor = a.getColor(
-                    R.styleable.InteractiveLineGraphView_dataColor, mDataColor);
-        } finally {
-            a.recycle();
-        }
-
-        initPaints();
-
-        // Sets up interactions
-        mScaleGestureDetector = new ScaleGestureDetector(context, mScaleGestureListener);
-        mGestureDetector = new GestureDetectorCompat(context, mGestureListener);
-
-        mScroller = new OverScroller(context);
-        mZoomer = new Zoomer(context);
-
-        // Sets up edge effects
-        mEdgeEffectLeft = new EdgeEffectCompat(context);
-        mEdgeEffectTop = new EdgeEffectCompat(context);
-        mEdgeEffectRight = new EdgeEffectCompat(context);
-        mEdgeEffectBottom = new EdgeEffectCompat(context);
-    }
-
-    /**
-     * (Re)initializes {@link Paint} objects based on current attribute values.
-     */
-    private void initPaints() {
-        mLabelTextPaint = new Paint();
-        mLabelTextPaint.setAntiAlias(true);
-        mLabelTextPaint.setTextSize(mLabelTextSize);
-        mLabelTextPaint.setColor(mLabelTextColor);
-        mLabelHeight = (int) Math.abs(mLabelTextPaint.getFontMetrics().top);
-        mMaxLabelWidth = (int) mLabelTextPaint.measureText("0000");
-
-        mGridPaint = new Paint();
-        mGridPaint.setStrokeWidth(mGridThickness);
-        mGridPaint.setColor(mGridColor);
-        mGridPaint.setStyle(Paint.Style.STROKE);
-
-        mAxisPaint = new Paint();
-        mAxisPaint.setStrokeWidth(mAxisThickness);
-        mAxisPaint.setColor(mAxisColor);
-        mAxisPaint.setStyle(Paint.Style.STROKE);
-
-        mDataPaint = new Paint();
-        mDataPaint.setStrokeWidth(mDataThickness);
-        mDataPaint.setColor(mDataColor);
-        mDataPaint.setStyle(Paint.Style.STROKE);
-        mDataPaint.setAntiAlias(true);
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        mContentRect.set(
-                getPaddingLeft() + mMaxLabelWidth + mLabelSeparation,
-                getPaddingTop(),
-                getWidth() - getPaddingRight(),
-                getHeight() - getPaddingBottom() - mLabelHeight - mLabelSeparation);
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int minChartSize = getResources().getDimensionPixelSize(R.dimen.min_chart_size);
-        setMeasuredDimension(
-                Math.max(getSuggestedMinimumWidth(),
-                        resolveSize(minChartSize + getPaddingLeft() + mMaxLabelWidth
-                                + mLabelSeparation + getPaddingRight(),
-                                widthMeasureSpec)),
-                Math.max(getSuggestedMinimumHeight(),
-                        resolveSize(minChartSize + getPaddingTop() + mLabelHeight
-                                + mLabelSeparation + getPaddingBottom(),
-                                heightMeasureSpec)));
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //     Methods and objects related to drawing
-    //
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        // Draws axes and text labels
-        drawAxes(canvas);
-
-        // Clips the next few drawing operations to the content area
-        int clipRestoreCount = canvas.save();
-        canvas.clipRect(mContentRect);
-
-        drawDataSeriesUnclipped(canvas);
-        drawEdgeEffectsUnclipped(canvas);
-
-        // Removes clipping rectangle
-        canvas.restoreToCount(clipRestoreCount);
-
-        // Draws chart container
-        canvas.drawRect(mContentRect, mAxisPaint);
-    }
-
-    /**
-     * Draws the chart axes and labels onto the canvas.
-     */
-    private void drawAxes(Canvas canvas) {
-        // Computes axis stops (in terms of numerical value and position on screen)
-        int i;
-
-        computeAxisStops(
-                mCurrentViewport.left,
-                mCurrentViewport.right,
-                mContentRect.width() / mMaxLabelWidth / 2,
-                mXStopsBuffer);
-        computeAxisStops(
-                mCurrentViewport.top,
-                mCurrentViewport.bottom,
-                mContentRect.height() / mLabelHeight / 2,
-                mYStopsBuffer);
-
-        // Avoid unnecessary allocations during drawing. Re-use allocated
-        // arrays and only reallocate if the number of stops grows.
-        if (mAxisXPositionsBuffer.length < mXStopsBuffer.numStops) {
-            mAxisXPositionsBuffer = new float[mXStopsBuffer.numStops];
-        }
-        if (mAxisYPositionsBuffer.length < mYStopsBuffer.numStops) {
-            mAxisYPositionsBuffer = new float[mYStopsBuffer.numStops];
-        }
-        if (mAxisXLinesBuffer.length < mXStopsBuffer.numStops * 4) {
-            mAxisXLinesBuffer = new float[mXStopsBuffer.numStops * 4];
-        }
-        if (mAxisYLinesBuffer.length < mYStopsBuffer.numStops * 4) {
-            mAxisYLinesBuffer = new float[mYStopsBuffer.numStops * 4];
-        }
-
-        // Compute positions
-        for (i = 0; i < mXStopsBuffer.numStops; i++) {
-            mAxisXPositionsBuffer[i] = getDrawX(mXStopsBuffer.stops[i]);
-        }
-        for (i = 0; i < mYStopsBuffer.numStops; i++) {
-            mAxisYPositionsBuffer[i] = getDrawY(mYStopsBuffer.stops[i]);
-        }
-
-        // Draws grid lines using drawLines (faster than individual drawLine calls)
-        for (i = 0; i < mXStopsBuffer.numStops; i++) {
-            mAxisXLinesBuffer[i * 4 + 0] = (float) Math.floor(mAxisXPositionsBuffer[i]);
-            mAxisXLinesBuffer[i * 4 + 1] = mContentRect.top;
-            mAxisXLinesBuffer[i * 4 + 2] = (float) Math.floor(mAxisXPositionsBuffer[i]);
-            mAxisXLinesBuffer[i * 4 + 3] = mContentRect.bottom;
-        }
-        canvas.drawLines(mAxisXLinesBuffer, 0, mXStopsBuffer.numStops * 4, mGridPaint);
-
-        for (i = 0; i < mYStopsBuffer.numStops; i++) {
-            mAxisYLinesBuffer[i * 4 + 0] = mContentRect.left;
-            mAxisYLinesBuffer[i * 4 + 1] = (float) Math.floor(mAxisYPositionsBuffer[i]);
-            mAxisYLinesBuffer[i * 4 + 2] = mContentRect.right;
-            mAxisYLinesBuffer[i * 4 + 3] = (float) Math.floor(mAxisYPositionsBuffer[i]);
-        }
-        canvas.drawLines(mAxisYLinesBuffer, 0, mYStopsBuffer.numStops * 4, mGridPaint);
-
-        // Draws X labels
-        int labelOffset;
-        int labelLength;
-        mLabelTextPaint.setTextAlign(Paint.Align.CENTER);
-        for (i = 0; i < mXStopsBuffer.numStops; i++) {
-            // Do not use String.format in high-performance code such as onDraw code.
-            labelLength = formatFloat(mLabelBuffer, mXStopsBuffer.stops[i], mXStopsBuffer.decimals);
-            labelOffset = mLabelBuffer.length - labelLength;
-            canvas.drawText(
-                    mLabelBuffer, labelOffset, labelLength,
-                    mAxisXPositionsBuffer[i],
-                    mContentRect.bottom + mLabelHeight + mLabelSeparation,
-                    mLabelTextPaint);
-        }
-
-        // Draws Y labels
-        mLabelTextPaint.setTextAlign(Paint.Align.RIGHT);
-        for (i = 0; i < mYStopsBuffer.numStops; i++) {
-            // Do not use String.format in high-performance code such as onDraw code.
-            labelLength = formatFloat(mLabelBuffer, mYStopsBuffer.stops[i], mYStopsBuffer.decimals);
-            labelOffset = mLabelBuffer.length - labelLength;
-            canvas.drawText(
-                    mLabelBuffer, labelOffset, labelLength,
-                    mContentRect.left - mLabelSeparation,
-                    mAxisYPositionsBuffer[i] + mLabelHeight / 2,
-                    mLabelTextPaint);
-        }
-    }
-
-    /**
-     * Rounds the given number to the given number of significant digits. Based on an answer on
-     * <a href="http://stackoverflow.com/questions/202302">Stack Overflow</a>.
-     */
-    private static float roundToOneSignificantFigure(double num) {
-        final float d = (float) Math.ceil((float) Math.log10(num < 0 ? -num : num));
-        final int power = 1 - (int) d;
-        final float magnitude = (float) Math.pow(10, power);
-        final long shifted = Math.round(num * magnitude);
-        return shifted / magnitude;
-    }
-
-    private static final int POW10[] = {1, 10, 100, 1000, 10000, 100000, 1000000};
-
-    /**
-     * Formats a float value to the given number of decimals. Returns the length of the string.
-     * The string begins at out.length - [return value].
-     */
-    private static int formatFloat(final char[] out, float val, int digits) {
-        boolean negative = false;
-        if (val == 0) {
-            out[out.length - 1] = '0';
-            return 1;
-        }
-        if (val < 0) {
-            negative = true;
-            val = -val;
-        }
-        if (digits > POW10.length) {
-            digits = POW10.length - 1;
-        }
-        val *= POW10[digits];
-        long lval = Math.round(val);
-        int index = out.length - 1;
-        int charCount = 0;
-        while (lval != 0 || charCount < (digits + 1)) {
-            int digit = (int) (lval % 10);
-            lval = lval / 10;
-            out[index--] = (char) (digit + '0');
-            charCount++;
-            if (charCount == digits) {
-                out[index--] = '.';
-                charCount++;
-            }
-        }
-        if (negative) {
-            out[index--] = '-';
-            charCount++;
-        }
-        return charCount;
-    }
-
-    /**
-     * Computes the set of axis labels to show given start and stop boundaries and an ideal number
-     * of stops between these boundaries.
-     *
-     * @param start The minimum extreme (e.g. the left edge) for the axis.
-     * @param stop The maximum extreme (e.g. the right edge) for the axis.
-     * @param steps The ideal number of stops to create. This should be based on available screen
-     *              space; the more space there is, the more stops should be shown.
-     * @param outStops The destination {@link AxisStops} object to populate.
-     */
-    private static void computeAxisStops(float start, float stop, int steps, AxisStops outStops) {
-        double range = stop - start;
-        if (steps == 0 || range <= 0) {
-            outStops.stops = new float[]{};
-            outStops.numStops = 0;
-            return;
-        }
-
-        double rawInterval = range / steps;
-        double interval = roundToOneSignificantFigure(rawInterval);
-        double intervalMagnitude = Math.pow(10, (int) Math.log10(interval));
-        int intervalSigDigit = (int) (interval / intervalMagnitude);
-        if (intervalSigDigit > 5) {
-            // Use one order of magnitude higher, to avoid intervals like 0.9 or 90
-            interval = Math.floor(10 * intervalMagnitude);
-        }
-
-        double first = Math.ceil(start / interval) * interval;
-        double last = Math.nextUp(Math.floor(stop / interval) * interval);
-
-        double f;
-        int i;
-        int n = 0;
-        for (f = first; f <= last; f += interval) {
-            ++n;
-        }
-
-        outStops.numStops = n;
-
-        if (outStops.stops.length < n) {
-            // Ensure stops contains at least numStops elements.
-            outStops.stops = new float[n];
-        }
-
-        for (f = first, i = 0; i < n; f += interval, ++i) {
-            outStops.stops[i] = (float) f;
-        }
-
-        if (interval < 1) {
-            outStops.decimals = (int) Math.ceil(-Math.log10(interval));
-        } else {
-            outStops.decimals = 0;
-        }
-    }
-
-    /**
-     * Computes the pixel offset for the given X chart value. This may be outside the view bounds.
-     */
-    private float getDrawX(float x) {
-        return mContentRect.left
-                + mContentRect.width()
-                * (x - mCurrentViewport.left) / mCurrentViewport.width();
-    }
-
-    /**
-     * Computes the pixel offset for the given Y chart value. This may be outside the view bounds.
-     */
-    private float getDrawY(float y) {
-        return mContentRect.bottom
-                - mContentRect.height()
-                * (y - mCurrentViewport.top) / mCurrentViewport.height();
-    }
-
-    /**
-     * Draws the currently visible portion of the data series defined by {@link #fun(float)} to the
-     * canvas. This method does not clip its drawing, so users should call {@link Canvas#clipRect
-     * before calling this method.
-     */
-    private void drawDataSeriesUnclipped(Canvas canvas) {
-        mSeriesLinesBuffer[0] = mContentRect.left;
-        mSeriesLinesBuffer[1] = getDrawY(fun(mCurrentViewport.left));
-        mSeriesLinesBuffer[2] = mSeriesLinesBuffer[0];
-        mSeriesLinesBuffer[3] = mSeriesLinesBuffer[1];
-        float x;
-        for (int i = 1; i <= DRAW_STEPS; i++) {
-            mSeriesLinesBuffer[i * 4 + 0] = mSeriesLinesBuffer[(i - 1) * 4 + 2];
-            mSeriesLinesBuffer[i * 4 + 1] = mSeriesLinesBuffer[(i - 1) * 4 + 3];
-
-            x = (mCurrentViewport.left + (mCurrentViewport.width() / DRAW_STEPS * i));
-            mSeriesLinesBuffer[i * 4 + 2] = getDrawX(x);
-            mSeriesLinesBuffer[i * 4 + 3] = getDrawY(fun(x));
-        }
-        canvas.drawLines(mSeriesLinesBuffer, mDataPaint);
-    }
-
-    /**
-     * Draws the overscroll "glow" at the four edges of the chart region, if necessary. The edges
-     * of the chart region are stored in {@link #mContentRect}.
-     *
-     * @see EdgeEffectCompat
-     */
-    private void drawEdgeEffectsUnclipped(Canvas canvas) {
-        // The methods below rotate and translate the canvas as needed before drawing the glow,
-        // since EdgeEffectCompat always draws a top-glow at 0,0.
-
-        boolean needsInvalidate = false;
-
-        if (!mEdgeEffectTop.isFinished()) {
-            final int restoreCount = canvas.save();
-            canvas.translate(mContentRect.left, mContentRect.top);
-            mEdgeEffectTop.setSize(mContentRect.width(), mContentRect.height());
-            if (mEdgeEffectTop.draw(canvas)) {
-                needsInvalidate = true;
-            }
-            canvas.restoreToCount(restoreCount);
-        }
-
-        if (!mEdgeEffectBottom.isFinished()) {
-            final int restoreCount = canvas.save();
-            canvas.translate(2 * mContentRect.left - mContentRect.right, mContentRect.bottom);
-            canvas.rotate(180, mContentRect.width(), 0);
-            mEdgeEffectBottom.setSize(mContentRect.width(), mContentRect.height());
-            if (mEdgeEffectBottom.draw(canvas)) {
-                needsInvalidate = true;
-            }
-            canvas.restoreToCount(restoreCount);
-        }
-
-        if (!mEdgeEffectLeft.isFinished()) {
-            final int restoreCount = canvas.save();
-            canvas.translate(mContentRect.left, mContentRect.bottom);
-            canvas.rotate(-90, 0, 0);
-            mEdgeEffectLeft.setSize(mContentRect.height(), mContentRect.width());
-            if (mEdgeEffectLeft.draw(canvas)) {
-                needsInvalidate = true;
-            }
-            canvas.restoreToCount(restoreCount);
-        }
-
-        if (!mEdgeEffectRight.isFinished()) {
-            final int restoreCount = canvas.save();
-            canvas.translate(mContentRect.right, mContentRect.top);
-            canvas.rotate(90, 0, 0);
-            mEdgeEffectRight.setSize(mContentRect.height(), mContentRect.width());
-            if (mEdgeEffectRight.draw(canvas)) {
-                needsInvalidate = true;
-            }
-            canvas.restoreToCount(restoreCount);
-        }
-
-        if (needsInvalidate) {
-            ViewCompat.postInvalidateOnAnimation(this);
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //     Methods and objects related to gesture handling
-    //
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Finds the chart point (i.e. within the chart's domain and range) represented by the
-     * given pixel coordinates, if that pixel is within the chart region described by
-     * {@link #mContentRect}. If the point is found, the "dest" argument is set to the point and
-     * this function returns true. Otherwise, this function returns false and "dest" is unchanged.
-     */
-    private boolean hitTest(float x, float y, PointF dest) {
-        if (!mContentRect.contains((int) x, (int) y)) {
-            return false;
-        }
-
-        dest.set(
-                mCurrentViewport.left
-                        + mCurrentViewport.width()
-                        * (x - mContentRect.left) / mContentRect.width(),
-                mCurrentViewport.top
-                        + mCurrentViewport.height()
-                        * (y - mContentRect.bottom) / -mContentRect.height());
-        return true;
-     }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        boolean retVal = mScaleGestureDetector.onTouchEvent(event);
-        retVal = mGestureDetector.onTouchEvent(event) || retVal;
-        return retVal || super.onTouchEvent(event);
-    }
-
+    private boolean isYZoomable = false;
     /**
      * The scale listener, used for handling multi-finger scale gestures.
      */
@@ -673,7 +152,7 @@ public class InteractiveLineGraphView extends View {
 
             float newWidth = lastSpanX / spanX * mCurrentViewport.width();
             float newHeight = lastSpanY / spanY * mCurrentViewport.height();
-
+            float originHeight = mCurrentViewport.height();
             float focusX = scaleGestureDetector.getFocusX();
             float focusY = scaleGestureDetector.getFocusY();
             hitTest(focusX, focusY, viewportFocus);
@@ -681,14 +160,14 @@ public class InteractiveLineGraphView extends View {
             mCurrentViewport.set(
                     viewportFocus.x
                             - newWidth * (focusX - mContentRect.left)
-                            / mContentRect.width(),
-                    viewportFocus.y
-                            - newHeight * (mContentRect.bottom - focusY)
-                            / mContentRect.height(),
+                            / mContentRect.width(), isYZoomable ?
+                            viewportFocus.y
+                                    - newHeight * (mContentRect.bottom - focusY)
+                                    / mContentRect.height() : mCurrentViewport.top,
                     0,
                     0);
             mCurrentViewport.right = mCurrentViewport.left + newWidth;
-            mCurrentViewport.bottom = mCurrentViewport.top + newHeight;
+            mCurrentViewport.bottom = mCurrentViewport.top + (isYZoomable ? newHeight : originHeight);
             constrainViewport();
             ViewCompat.postInvalidateOnAnimation(InteractiveLineGraphView.this);
 
@@ -697,20 +176,46 @@ public class InteractiveLineGraphView extends View {
             return true;
         }
     };
-
-    /**
-     * Ensures that current viewport is inside the viewport extremes defined by {@link #AXIS_X_MIN},
-     * {@link #AXIS_X_MAX}, {@link #AXIS_Y_MIN} and {@link #AXIS_Y_MAX}.
-     */
-    private void constrainViewport() {
-        mCurrentViewport.left = Math.max(AXIS_X_MIN, mCurrentViewport.left);
-        mCurrentViewport.top = Math.max(AXIS_Y_MIN, mCurrentViewport.top);
-        mCurrentViewport.bottom = Math.max(Math.nextUp(mCurrentViewport.top),
-                Math.min(AXIS_Y_MAX, mCurrentViewport.bottom));
-        mCurrentViewport.right = Math.max(Math.nextUp(mCurrentViewport.left),
-                Math.min(AXIS_X_MAX, mCurrentViewport.right));
-    }
-
+    private boolean isYScrollable = false;
+    // Current attribute values and Paints.
+    private float mLabelTextSize;
+    private int mLabelSeparation;
+    private int mLabelTextColor;
+    private Paint mLabelTextPaint;
+    private int mMaxLabelWidth;
+    private int mLabelHeight;
+    private float mGridThickness;
+    private int mGridColor;
+    private Paint mGridPaint;
+    private float mAxisThickness;
+    private int mAxisColor;
+    private Paint mAxisPaint;
+    private float mDataThickness;
+    private int mDataColor;
+    private Paint mDataPaint;
+    // State objects and values related to gesture tracking.
+    private ScaleGestureDetector mScaleGestureDetector;
+    private GestureDetectorCompat mGestureDetector;
+    private OverScroller mScroller;
+    private Zoomer mZoomer;
+    private PointF mZoomFocalPoint = new PointF();
+    private RectF mScrollerStartViewport = new RectF(); // Used only for zooms and flings.
+    // Edge effect / overscroll tracking objects.
+    private EdgeEffectCompat mEdgeEffectTop;
+    private EdgeEffectCompat mEdgeEffectBottom;
+    private EdgeEffectCompat mEdgeEffectLeft;
+    private EdgeEffectCompat mEdgeEffectRight;
+    private boolean mEdgeEffectTopActive;
+    private boolean mEdgeEffectBottomActive;
+    private boolean mEdgeEffectLeftActive;
+    private boolean mEdgeEffectRightActive;
+    // Buffers used during drawing. These are defined as fields to avoid allocation during
+    // draw calls.
+    private float[] mAxisXPositionsBuffer = new float[]{};
+    private float[] mAxisYPositionsBuffer = new float[]{};
+    private float[] mAxisXLinesBuffer = new float[]{};
+    private float[] mAxisYLinesBuffer = new float[]{};
+    private Point mSurfaceSizeBuffer = new Point();
     /**
      * The gesture listener, used for handling simple gestures such as double touches, scrolls,
      * and flings.
@@ -790,6 +295,446 @@ public class InteractiveLineGraphView extends View {
             return true;
         }
     };
+    private boolean isDrawContainer = false;
+    private Series mSeriesLinesBuffer;
+
+    public InteractiveLineGraphView(Context context) {
+        this(context, null, 0);
+    }
+
+    public InteractiveLineGraphView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //     Methods and objects related to drawing
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    public InteractiveLineGraphView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs, R.styleable.InteractiveLineGraphView, defStyle, defStyle);
+
+        try {
+            mLabelTextColor = a.getColor(
+                    R.styleable.InteractiveLineGraphView_labelTextColor, mLabelTextColor);
+            mLabelTextSize = a.getDimension(
+                    R.styleable.InteractiveLineGraphView_labelTextSize, mLabelTextSize);
+            mLabelSeparation = a.getDimensionPixelSize(
+                    R.styleable.InteractiveLineGraphView_labelSeparation, mLabelSeparation);
+
+            mGridThickness = a.getDimension(
+                    R.styleable.InteractiveLineGraphView_gridThickness, mGridThickness);
+            mGridColor = a.getColor(
+                    R.styleable.InteractiveLineGraphView_gridColor, mGridColor);
+
+            mAxisThickness = a.getDimension(
+                    R.styleable.InteractiveLineGraphView_axisThickness, mAxisThickness);
+            mAxisColor = a.getColor(
+                    R.styleable.InteractiveLineGraphView_axisColor, mAxisColor);
+
+            mDataThickness = a.getDimension(
+                    R.styleable.InteractiveLineGraphView_dataThickness, mDataThickness);
+            mDataColor = a.getColor(
+                    R.styleable.InteractiveLineGraphView_dataColor, mDataColor);
+        } finally {
+            a.recycle();
+        }
+
+        initPaints();
+        initData();
+
+        // Sets up interactions
+        mScaleGestureDetector = new ScaleGestureDetector(context, mScaleGestureListener);
+        mGestureDetector = new GestureDetectorCompat(context, mGestureListener);
+
+        mScroller = new OverScroller(context);
+        mZoomer = new Zoomer(context);
+
+        // Sets up edge effects
+        mEdgeEffectLeft = new EdgeEffectCompat(context);
+        mEdgeEffectTop = new EdgeEffectCompat(context);
+        mEdgeEffectRight = new EdgeEffectCompat(context);
+        mEdgeEffectBottom = new EdgeEffectCompat(context);
+    }
+
+    /**
+     * Computes the set of axis labels to show given start and stop boundaries and an ideal number
+     * of stops between these boundaries.
+     *
+     * @param start    The minimum extreme (e.g. the left edge) for the axis.
+     * @param stop     The maximum extreme (e.g. the right edge) for the axis.
+     * @param steps    The ideal number of stops to create. This should be based on available screen
+     *                 space; the more space there is, the more stops should be shown.
+     * @param outStops The destination {@link AxisStops} object to populate.
+     */
+    private static void computeAxisStops(float start, float stop, int steps, AxisStops outStops) {
+        Log.d(TAG, "pre-->computeAxisStops start:" + start + ",stop:" + stop + ",step:" + steps);
+        double range = stop - start;
+        if (steps == 0 || range <= 0) {
+            outStops.stops = new float[]{};
+            outStops.numStops = 0;
+            outStops.interval = 0;
+            Log.d(TAG, "end-->computeAxisStops num:" + outStops.numStops + ",interval:" + outStops.interval);
+
+            return;
+        }
+
+        double rawInterval = range / steps;
+        double interval = ChartUtil.roundToOneSignificantFigure(rawInterval);
+        double intervalMagnitude = Math.pow(10, (int) Math.log10(interval));
+        int intervalSigDigit = (int) (interval / intervalMagnitude);
+        if (intervalSigDigit > 5) {
+            // Use one order of magnitude higher, to avoid intervals like 0.9 or 90
+            interval = Math.floor(10 * intervalMagnitude);
+        }
+
+        double first = Math.ceil(start / interval) * interval;
+        double last = Math.nextUp(Math.floor(stop / interval) * interval);
+        double f;
+        int i;
+        int n = 0;
+        for (f = first; f <= last; f += interval) {
+            ++n;
+        }
+
+        outStops.numStops = n;
+
+        if (outStops.stops.length < n) {
+            // Ensure stops contains at least numStops elements.
+            outStops.stops = new float[n];
+        }
+
+        for (f = first, i = 0; i < n; f += interval, ++i) {
+            outStops.stops[i] = (float) f;
+        }
+
+        if (interval < 1) {
+            outStops.decimals = (int) Math.ceil(-Math.log10(interval));
+        } else {
+            outStops.decimals = 0;
+        }
+        outStops.interval = interval;
+        Log.d(TAG, "end-->computeAxisStops num:" + outStops.numStops + ",decimal:" + outStops.decimals + ",interval:" + outStops.interval);
+    }
+
+    private void initData() {
+        mSeriesLinesBuffer = new Series();
+        mSeriesLinesBuffer.devInitData();
+    }
+
+    /**
+     * (Re)initializes {@link Paint} objects based on current attribute values.
+     */
+    private void initPaints() {
+        mLabelTextPaint = new Paint();
+        mLabelTextPaint.setAntiAlias(true);
+        mLabelTextPaint.setTextSize(mLabelTextSize);
+        mLabelTextPaint.setColor(mLabelTextColor);
+        mLabelHeight = (int) Math.abs(mLabelTextPaint.getFontMetrics().top);
+        mMaxLabelWidth = (int) mLabelTextPaint.measureText("0000");
+
+        mGridPaint = new Paint();
+        mGridPaint.setStrokeWidth(mGridThickness);
+        mGridPaint.setColor(mGridColor);
+        mGridPaint.setStyle(Paint.Style.STROKE);
+
+        mAxisPaint = new Paint();
+        mAxisPaint.setStrokeWidth(mAxisThickness);
+        mAxisPaint.setColor(mAxisColor);
+        mAxisPaint.setStyle(Paint.Style.STROKE);
+
+        mDataPaint = new Paint();
+        mDataPaint.setStrokeWidth(mDataThickness);
+        mDataPaint.setColor(mDataColor);
+        mDataPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mDataPaint.setAntiAlias(true);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Log.d(TAG, "onSizeChanged" + " w:" + w + ",h:" + h + ",oldw:" + oldw + ",oldh" + oldh);
+        mContentRect.set(
+                getPaddingLeft() + mMaxLabelWidth + mLabelSeparation,
+                getPaddingTop(),
+                getWidth() - getPaddingRight(),
+                getHeight() - getPaddingBottom() - mLabelHeight - mLabelSeparation);
+
+        Log.d(TAG, "onSizeChanged 计算后的内容大小 width:" + mContentRect.width() + ",height" + mContentRect.height());
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int minChartSize = getResources().getDimensionPixelSize(R.dimen.min_chart_size);
+        setMeasuredDimension(
+                Math.max(getSuggestedMinimumWidth(),
+                        resolveSize(minChartSize + getPaddingLeft() + mMaxLabelWidth
+                                        + mLabelSeparation + getPaddingRight(),
+                                widthMeasureSpec)),
+                Math.max(getSuggestedMinimumHeight(),
+                        resolveSize(minChartSize + getPaddingTop() + mLabelHeight
+                                        + mLabelSeparation + getPaddingBottom(),
+                                heightMeasureSpec)));
+        Log.d(TAG, "onMeasure  width:" + getMeasuredWidth() + ",height" + getMeasuredHeight());
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Log.v(TAG, "onDraw");
+        // Draws axes and text labels
+        drawAxes(canvas);
+        for (int i = 0; i < 20000; i++) {
+
+        }
+
+        // Clips the next few drawing operations to the content area
+        int clipRestoreCount = canvas.save();
+        canvas.clipRect(mContentRect);
+
+        drawDataSeriesUnclipped(canvas);
+        drawEdgeEffectsUnclipped(canvas);
+
+        // Removes clipping rectangle
+        canvas.restoreToCount(clipRestoreCount);
+
+        // Draws chart container
+        if (isDrawContainer)
+            canvas.drawRect(mContentRect, mAxisPaint);
+    }
+
+    /**
+     * Draws the chart axes and labels onto the canvas.
+     */
+    private void drawAxes(Canvas canvas) {
+        // Computes axis stops (in terms of numerical value and position on screen)
+        int i;
+
+        computeAxisStops(
+                mCurrentViewport.left,
+                mCurrentViewport.right,
+                mContentRect.width() / mMaxLabelWidth / 2,
+                mXStopsBuffer);
+        computeAxisStops(
+                mCurrentViewport.top,
+                mCurrentViewport.bottom,
+                mContentRect.height() / mLabelHeight / 2,
+                mYStopsBuffer);
+
+        // Avoid unnecessary allocations during drawing. Re-use allocated
+        // arrays and only reallocate if the number of stops grows.
+        if (mAxisXPositionsBuffer.length < mXStopsBuffer.numStops) {
+            mAxisXPositionsBuffer = new float[mXStopsBuffer.numStops];
+        }
+        if (mAxisYPositionsBuffer.length < mYStopsBuffer.numStops) {
+            mAxisYPositionsBuffer = new float[mYStopsBuffer.numStops];
+        }
+        if (mAxisXLinesBuffer.length < mXStopsBuffer.numStops * 4) {
+            mAxisXLinesBuffer = new float[mXStopsBuffer.numStops * 4];
+        }
+        if (mAxisYLinesBuffer.length < mYStopsBuffer.numStops * 4) {
+            mAxisYLinesBuffer = new float[mYStopsBuffer.numStops * 4];
+        }
+
+        // Compute positions
+        for (i = 0; i < mXStopsBuffer.numStops; i++) {
+            mAxisXPositionsBuffer[i] = getDrawX(mXStopsBuffer.stops[i]);
+        }
+        for (i = 0; i < mYStopsBuffer.numStops; i++) {
+            mAxisYPositionsBuffer[i] = getDrawY(mYStopsBuffer.stops[i]);
+        }
+
+        // Draws grid lines using drawLines (faster than individual drawLine calls)
+        for (i = 0; i < mXStopsBuffer.numStops; i++) {
+            mAxisXLinesBuffer[i * 4 + 0] = (float) Math.floor(mAxisXPositionsBuffer[i]);
+            mAxisXLinesBuffer[i * 4 + 1] = mContentRect.top;
+            mAxisXLinesBuffer[i * 4 + 2] = (float) Math.floor(mAxisXPositionsBuffer[i]);
+            mAxisXLinesBuffer[i * 4 + 3] = mContentRect.bottom;
+        }
+        canvas.drawLines(mAxisXLinesBuffer, 0, mXStopsBuffer.numStops * 4, mGridPaint);
+
+        for (i = 0; i < mYStopsBuffer.numStops; i++) {
+            mAxisYLinesBuffer[i * 4 + 0] = mContentRect.left;
+            mAxisYLinesBuffer[i * 4 + 1] = (float) Math.floor(mAxisYPositionsBuffer[i]);
+            mAxisYLinesBuffer[i * 4 + 2] = mContentRect.right;
+            mAxisYLinesBuffer[i * 4 + 3] = (float) Math.floor(mAxisYPositionsBuffer[i]);
+        }
+        canvas.drawLines(mAxisYLinesBuffer, 0, mYStopsBuffer.numStops * 4, mGridPaint);
+
+        // Draws X labels
+        int labelOffset;
+        int labelLength;
+        mLabelTextPaint.setTextAlign(Paint.Align.CENTER);
+        for (i = 0; i < mXStopsBuffer.numStops; i++) {
+            // Do not use String.format in high-performance code such as onDraw code.
+            labelLength = ChartUtil.formatFloat(mLabelBuffer, mXStopsBuffer.stops[i], mXStopsBuffer.decimals);
+            labelOffset = mLabelBuffer.length - labelLength;
+            canvas.drawText(
+                    mLabelBuffer, labelOffset, labelLength,
+                    mAxisXPositionsBuffer[i],
+                    mContentRect.bottom + mLabelHeight + mLabelSeparation,
+                    mLabelTextPaint);
+        }
+
+        // Draws Y labels
+        mLabelTextPaint.setTextAlign(Paint.Align.RIGHT);
+        for (i = 0; i < mYStopsBuffer.numStops; i++) {
+            // Do not use String.format in high-performance code such as onDraw code.
+            labelLength = ChartUtil.formatFloat(mLabelBuffer, mYStopsBuffer.stops[i], mYStopsBuffer.decimals);
+            labelOffset = mLabelBuffer.length - labelLength;
+            canvas.drawText(
+                    mLabelBuffer, labelOffset, labelLength,
+                    mContentRect.left - mLabelSeparation,
+                    mAxisYPositionsBuffer[i] + mLabelHeight / 2,
+                    mLabelTextPaint);
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //     Methods and objects related to gesture handling
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Computes the pixel offset for the given X chart value. This may be outside the view bounds.
+     */
+    private float getDrawX(float x) {
+        return mContentRect.left
+                + mContentRect.width()
+                * (x - mCurrentViewport.left) / mCurrentViewport.width();
+    }
+
+    /**
+     * Computes the pixel offset for the given Y chart value. This may be outside the view bounds.
+     */
+    private float getDrawY(float y) {
+        return mContentRect.bottom
+                - mContentRect.height()
+                * (y - mCurrentViewport.top) / mCurrentViewport.height();
+    }
+
+    /**
+     * Draws the currently visible portion of the data series  to the
+     * canvas. This method does not clip its drawing, so users should call {@link Canvas#clipRect
+     * before calling this method.
+     */
+    private void drawDataSeriesUnclipped(Canvas canvas) {
+
+        canvas.drawCircle(getDrawX(0), getDrawY(0.5f), 20, mDataPaint);
+
+        for (int i = 0; i < mSeriesLinesBuffer.fetchBuffer().size(); i++) {
+            PointF prePoint = mSeriesLinesBuffer.fetchBuffer().get(i);
+            PointF nextPoint = mSeriesLinesBuffer.fetchBuffer().get(i + 1 >= mSeriesLinesBuffer.fetchBuffer().size() ? i : i + 1);
+            canvas.drawLine(getDrawX(prePoint.x), getDrawY(prePoint.y), getDrawX(nextPoint.x), getDrawY(nextPoint.y), mDataPaint);
+            canvas.drawCircle(getDrawX(prePoint.x), getDrawY(prePoint.y), 15, mDataPaint);
+        }
+    }
+
+    /**
+     * Draws the overscroll "glow" at the four edges of the chart region, if necessary. The edges
+     * of the chart region are stored in {@link #mContentRect}.
+     *
+     * @see EdgeEffectCompat
+     */
+    private void drawEdgeEffectsUnclipped(Canvas canvas) {
+        // The methods below rotate and translate the canvas as needed before drawing the glow,
+        // since EdgeEffectCompat always draws a top-glow at 0,0.
+
+        boolean needsInvalidate = false;
+
+        if (!mEdgeEffectTop.isFinished()) {
+            final int restoreCount = canvas.save();
+            canvas.translate(mContentRect.left, mContentRect.top);
+            mEdgeEffectTop.setSize(mContentRect.width(), mContentRect.height());
+            if (mEdgeEffectTop.draw(canvas)) {
+                needsInvalidate = true;
+            }
+            canvas.restoreToCount(restoreCount);
+        }
+
+        if (!mEdgeEffectBottom.isFinished()) {
+            final int restoreCount = canvas.save();
+            canvas.translate(2 * mContentRect.left - mContentRect.right, mContentRect.bottom);
+            canvas.rotate(180, mContentRect.width(), 0);
+            mEdgeEffectBottom.setSize(mContentRect.width(), mContentRect.height());
+            if (mEdgeEffectBottom.draw(canvas)) {
+                needsInvalidate = true;
+            }
+            canvas.restoreToCount(restoreCount);
+        }
+
+        if (!mEdgeEffectLeft.isFinished()) {
+            final int restoreCount = canvas.save();
+            canvas.translate(mContentRect.left, mContentRect.bottom);
+            canvas.rotate(-90, 0, 0);
+            mEdgeEffectLeft.setSize(mContentRect.height(), mContentRect.width());
+            if (mEdgeEffectLeft.draw(canvas)) {
+                needsInvalidate = true;
+            }
+            canvas.restoreToCount(restoreCount);
+        }
+
+        if (!mEdgeEffectRight.isFinished()) {
+            final int restoreCount = canvas.save();
+            canvas.translate(mContentRect.right, mContentRect.top);
+            canvas.rotate(90, 0, 0);
+            mEdgeEffectRight.setSize(mContentRect.height(), mContentRect.width());
+            if (mEdgeEffectRight.draw(canvas)) {
+                needsInvalidate = true;
+            }
+            canvas.restoreToCount(restoreCount);
+        }
+
+        if (needsInvalidate) {
+            ViewCompat.postInvalidateOnAnimation(this);
+        }
+    }
+
+    /**
+     * Finds the chart point (i.e. within the chart's domain and range) represented by the
+     * given pixel coordinates, if that pixel is within the chart region described by
+     * {@link #mContentRect}. If the point is found, the "dest" argument is set to the point and
+     * this function returns true. Otherwise, this function returns false and "dest" is unchanged.
+     */
+    private boolean hitTest(float x, float y, PointF dest) {
+        if (!mContentRect.contains((int) x, (int) y)) {
+            return false;
+        }
+
+        dest.set(
+                mCurrentViewport.left
+                        + mCurrentViewport.width()
+                        * (x - mContentRect.left) / mContentRect.width(), isYZoomable ?
+                        mCurrentViewport.top
+                                + mCurrentViewport.height()
+                                * (y - mContentRect.bottom) / -mContentRect.height() : dest.y);
+        return true;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        boolean retVal = mScaleGestureDetector.onTouchEvent(event);
+        retVal = mGestureDetector.onTouchEvent(event) || retVal;
+        return retVal || super.onTouchEvent(event);
+    }
+
+    /**
+     * Ensures that current viewport is inside the viewport extremes defined by {@link #AXIS_X_MIN},
+     * {@link #AXIS_X_MAX}, {@link #AXIS_Y_MIN} and {@link #AXIS_Y_MAX}.
+     */
+    private void constrainViewport() {
+        mCurrentViewport.left = Math.max(AXIS_X_MIN, mCurrentViewport.left);
+        mCurrentViewport.top = Math.max(AXIS_Y_MIN, mCurrentViewport.top);
+        mCurrentViewport.bottom = Math.max(Math.nextUp(mCurrentViewport.top),
+                Math.min(AXIS_Y_MAX, mCurrentViewport.bottom));
+        mCurrentViewport.right = Math.max(Math.nextUp(mCurrentViewport.left),
+                Math.min(AXIS_X_MAX, mCurrentViewport.right));
+    }
 
     private void releaseEdgeEffects() {
         mEdgeEffectLeftActive
@@ -908,9 +853,9 @@ public class InteractiveLineGraphView extends View {
                     / mScrollerStartViewport.height();
             mCurrentViewport.set(
                     mZoomFocalPoint.x - newWidth * pointWithinViewportX,
-                    mZoomFocalPoint.y - newHeight * pointWithinViewportY,
+                    isYZoomable ? mZoomFocalPoint.y - newHeight * pointWithinViewportY : mCurrentViewport.top,
                     mZoomFocalPoint.x + newWidth * (1 - pointWithinViewportX),
-                    mZoomFocalPoint.y + newHeight * (1 - pointWithinViewportY));
+                    isYZoomable ? mZoomFocalPoint.y + newHeight * (1 - pointWithinViewportY) : mCurrentViewport.bottom);
             constrainViewport();
             needsInvalidate = true;
         }
@@ -975,7 +920,7 @@ public class InteractiveLineGraphView extends View {
         mZoomer.startZoom(ZOOM_AMOUNT);
         mZoomFocalPoint.set(
                 (mCurrentViewport.right + mCurrentViewport.left) / 2,
-                (mCurrentViewport.bottom + mCurrentViewport.top) / 2);
+                isYZoomable ? (mCurrentViewport.bottom + mCurrentViewport.top) / 2 : (mCurrentViewport.bottom + mCurrentViewport.top));
         ViewCompat.postInvalidateOnAnimation(this);
     }
 
@@ -987,8 +932,8 @@ public class InteractiveLineGraphView extends View {
         mZoomer.forceFinished(true);
         mZoomer.startZoom(-ZOOM_AMOUNT);
         mZoomFocalPoint.set(
-                (mCurrentViewport.right + mCurrentViewport.left) / 2,
-                (mCurrentViewport.bottom + mCurrentViewport.top) / 2);
+                (mCurrentViewport.right + mCurrentViewport.left) / 2, isYZoomable ?
+                        (mCurrentViewport.bottom + mCurrentViewport.top) / 2 : (mCurrentViewport.bottom + mCurrentViewport.top));
         ViewCompat.postInvalidateOnAnimation(this);
     }
 
@@ -1133,10 +1078,27 @@ public class InteractiveLineGraphView extends View {
      * Persistent state that is saved by InteractiveLineGraphView.
      */
     public static class SavedState extends BaseSavedState {
+        public static final Creator<SavedState> CREATOR
+                = ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<SavedState>() {
+            @Override
+            public SavedState createFromParcel(Parcel in, ClassLoader loader) {
+                return new SavedState(in);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        });
         private RectF viewport;
 
         public SavedState(Parcelable superState) {
             super(superState);
+        }
+
+        SavedState(Parcel in) {
+            super(in);
+            viewport = new RectF(in.readFloat(), in.readFloat(), in.readFloat(), in.readFloat());
         }
 
         @Override
@@ -1154,24 +1116,6 @@ public class InteractiveLineGraphView extends View {
                     + Integer.toHexString(System.identityHashCode(this))
                     + " viewport=" + viewport.toString() + "}";
         }
-
-        public static final Creator<SavedState> CREATOR
-                = ParcelableCompat.newCreator(new ParcelableCompatCreatorCallbacks<SavedState>() {
-            @Override
-            public SavedState createFromParcel(Parcel in, ClassLoader loader) {
-                return new SavedState(in);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        });
-
-        SavedState(Parcel in) {
-            super(in);
-            viewport = new RectF(in.readFloat(), in.readFloat(), in.readFloat(), in.readFloat());
-        }
     }
 
     /**
@@ -1183,5 +1127,6 @@ public class InteractiveLineGraphView extends View {
         float[] stops = new float[]{};
         int numStops;
         int decimals;
+        double interval;
     }
 }
