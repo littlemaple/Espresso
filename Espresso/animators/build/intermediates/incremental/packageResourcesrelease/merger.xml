@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\workplace\AndroidStudio\github\Espresso\animators\src\main\res"/><source path="D:\workplace\AndroidStudio\github\Espresso\animators\build\generated\res\rs\release"/><source path="D:\workplace\AndroidStudio\github\Espresso\animators\build\generated\res\resValues\release"/></dataSet><dataSet config="release"><source path="D:\workplace\AndroidStudio\github\Espresso\animators\src\release\res"/></dataSet><mergedItems/></merger>
