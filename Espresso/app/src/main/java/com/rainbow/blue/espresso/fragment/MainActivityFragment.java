@@ -33,7 +33,7 @@ import jp.wasabeef.recyclerview.animators.LandingAnimator;
 public class MainActivityFragment extends Fragment implements View.OnClickListener {
 
     public static final String tag = "MainActivityFragment";
-    private static final String url = "http://medzone.sinaapp.com/api/";
+    private static final String url = "http://anecdote.sinaapp.com/api/";
     private RecyclerView recyclerView;
     private MessageAdapter adapter;
     private Button btnAdd;

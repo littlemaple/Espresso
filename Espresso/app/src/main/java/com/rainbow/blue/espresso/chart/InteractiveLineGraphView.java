@@ -42,6 +42,8 @@ import android.widget.OverScroller;
 import com.rainbow.blue.espresso.R;
 import com.rainbow.blue.espresso.util.ChartUtil;
 
+import java.util.List;
+
 /**
  * A view representing a simple yet interactive line chart for the function <code>x^3 - x/4</code>.
  * <p/>
@@ -93,13 +95,15 @@ public class InteractiveLineGraphView extends View {
      * @see #zoomIn()
      * @see #zoomOut()
      */
-    private static final float ZOOM_AMOUNT = 0.25f;
-
+    private static final float ZOOM_AMOUNT = 1f;
+    private static final int NumYLabels = 12;
+    private static float VIEW_PORT_AXIS_X_MIN = 0;
+    private static float VIEW_PORT_AXIS_X_MAX = 30 * 60;
     // Viewport extremes. See mCurrentViewport for a discussion of the viewport.
-    private static final float AXIS_X_MIN = -1f;
-    private static final float AXIS_X_MAX = 1f;
-    private static final float AXIS_Y_MIN = -1f;
-    private static final float AXIS_Y_MAX = 1f;
+    private static float AXIS_X_MIN = 0f;
+    private static float AXIS_X_MAX = 5f;
+    private static float AXIS_Y_MIN = 0f;
+    private static float AXIS_Y_MAX = 12f;
     // Buffers for storing current X and Y stops. See the computeAxisStops method for more details.
     private final AxisStops mXStopsBuffer = new AxisStops();
     private final AxisStops mYStopsBuffer = new AxisStops();
@@ -116,7 +120,7 @@ public class InteractiveLineGraphView extends View {
      *
      * @see #mContentRect
      */
-    private RectF mCurrentViewport = new RectF(AXIS_X_MIN, AXIS_Y_MIN, AXIS_X_MAX, AXIS_Y_MAX);
+    private RectF mCurrentViewport = new RectF(VIEW_PORT_AXIS_X_MIN, AXIS_Y_MIN, VIEW_PORT_AXIS_X_MAX, AXIS_Y_MAX);
     /**
      * The current destination rectangle (in pixel coordinates) into which the chart data should
      * be drawn. Chart labels are drawn outside this area.
@@ -125,6 +129,7 @@ public class InteractiveLineGraphView extends View {
      */
     private Rect mContentRect = new Rect();
     private boolean isYZoomable = false;
+    private boolean isXZoomable = true;
     /**
      * The scale listener, used for handling multi-finger scale gestures.
      */
@@ -138,10 +143,13 @@ public class InteractiveLineGraphView extends View {
         private float lastSpanX;
         private float lastSpanY;
 
+        private float lasSpan;
+
         @Override
         public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
             lastSpanX = ScaleGestureDetectorCompat.getCurrentSpanX(scaleGestureDetector);
             lastSpanY = ScaleGestureDetectorCompat.getCurrentSpanY(scaleGestureDetector);
+            lasSpan = scaleGestureDetector.getCurrentSpan();
             return true;
         }
 
@@ -149,24 +157,28 @@ public class InteractiveLineGraphView extends View {
         public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
             float spanX = ScaleGestureDetectorCompat.getCurrentSpanX(scaleGestureDetector);
             float spanY = ScaleGestureDetectorCompat.getCurrentSpanY(scaleGestureDetector);
-
             float newWidth = lastSpanX / spanX * mCurrentViewport.width();
             float newHeight = lastSpanY / spanY * mCurrentViewport.height();
+
+            float span = scaleGestureDetector.getCurrentSpan();
+
+
             float originHeight = mCurrentViewport.height();
+            float originWidth = mCurrentViewport.width();
             float focusX = scaleGestureDetector.getFocusX();
             float focusY = scaleGestureDetector.getFocusY();
             hitTest(focusX, focusY, viewportFocus);
 
             mCurrentViewport.set(
-                    viewportFocus.x
+                    isXZoomable ? viewportFocus.x
                             - newWidth * (focusX - mContentRect.left)
-                            / mContentRect.width(), isYZoomable ?
+                            / mContentRect.width() : mCurrentViewport.left, isYZoomable ?
                             viewportFocus.y
                                     - newHeight * (mContentRect.bottom - focusY)
                                     / mContentRect.height() : mCurrentViewport.top,
                     0,
                     0);
-            mCurrentViewport.right = mCurrentViewport.left + newWidth;
+            mCurrentViewport.right = mCurrentViewport.left + (isXZoomable ? newWidth : originWidth);
             mCurrentViewport.bottom = mCurrentViewport.top + (isYZoomable ? newHeight : originHeight);
             constrainViewport();
             ViewCompat.postInvalidateOnAnimation(InteractiveLineGraphView.this);
@@ -297,13 +309,10 @@ public class InteractiveLineGraphView extends View {
     };
     private boolean isDrawContainer = false;
     private Series mSeriesLinesBuffer;
+    private Series mSeriesLinesBuffer2;
 
     public InteractiveLineGraphView(Context context) {
         this(context, null, 0);
-    }
-
-    public InteractiveLineGraphView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
@@ -311,6 +320,10 @@ public class InteractiveLineGraphView extends View {
     //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    public InteractiveLineGraphView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
     public InteractiveLineGraphView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -361,6 +374,21 @@ public class InteractiveLineGraphView extends View {
         mEdgeEffectBottom = new EdgeEffectCompat(context);
     }
 
+    private static void computeAxisStopsSpecial(float start, float stop, int labels, AxisStops outStops) {
+        int interval = (int) Math.abs(stop - start) / labels;
+        float val = start;
+        if (outStops.stops.length < labels) {
+            // Ensure stops contains at least numStops elements.
+            outStops.stops = new float[labels];
+        }
+        for (int i = 0; i < labels; val += interval, ++i) {
+            outStops.stops[i] = (float) val;
+        }
+        outStops.numStops = labels;
+        outStops.interval = interval;
+
+    }
+
     /**
      * Computes the set of axis labels to show given start and stop boundaries and an ideal number
      * of stops between these boundaries.
@@ -372,14 +400,13 @@ public class InteractiveLineGraphView extends View {
      * @param outStops The destination {@link AxisStops} object to populate.
      */
     private static void computeAxisStops(float start, float stop, int steps, AxisStops outStops) {
-        Log.d(TAG, "pre-->computeAxisStops start:" + start + ",stop:" + stop + ",step:" + steps);
+//        Log.d(TAG, "pre-->computeAxisStops start:" + start + ",stop:" + stop + ",step:" + steps);
         double range = stop - start;
         if (steps == 0 || range <= 0) {
             outStops.stops = new float[]{};
             outStops.numStops = 0;
             outStops.interval = 0;
-            Log.d(TAG, "end-->computeAxisStops num:" + outStops.numStops + ",interval:" + outStops.interval);
-
+//            Log.d(TAG, "end-->computeAxisStops num:" + outStops.numStops + ",interval:" + outStops.interval);
             return;
         }
 
@@ -418,12 +445,19 @@ public class InteractiveLineGraphView extends View {
             outStops.decimals = 0;
         }
         outStops.interval = interval;
-        Log.d(TAG, "end-->computeAxisStops num:" + outStops.numStops + ",decimal:" + outStops.decimals + ",interval:" + outStops.interval);
+//        Log.d(TAG, "end-->computeAxisStops num:" + outStops.numStops + ",decimal:" + outStops.decimals + ",interval:" + outStops.interval);
     }
 
     private void initData() {
         mSeriesLinesBuffer = new Series();
-        mSeriesLinesBuffer.devInitData();
+        mSeriesLinesBuffer2 = new Series();
+        mSeriesLinesBuffer.devInitData(0);
+        mSeriesLinesBuffer2.devInitData(7);
+
+        // Viewport extremes. See mCurrentViewport for a discussion of the viewport.
+        AXIS_X_MIN = 0;
+        AXIS_X_MAX = 12 * 60 * 60;
+
     }
 
     /**
@@ -452,6 +486,8 @@ public class InteractiveLineGraphView extends View {
         mDataPaint.setColor(mDataColor);
         mDataPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         mDataPaint.setAntiAlias(true);
+
+
     }
 
     @Override
@@ -485,12 +521,8 @@ public class InteractiveLineGraphView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.v(TAG, "onDraw");
         // Draws axes and text labels
         drawAxes(canvas);
-        for (int i = 0; i < 20000; i++) {
-
-        }
 
         // Clips the next few drawing operations to the content area
         int clipRestoreCount = canvas.save();
@@ -519,10 +551,15 @@ public class InteractiveLineGraphView extends View {
                 mCurrentViewport.right,
                 mContentRect.width() / mMaxLabelWidth / 2,
                 mXStopsBuffer);
-        computeAxisStops(
+//        computeAxisStops(
+//                mCurrentViewport.top,
+//                mCurrentViewport.bottom,
+//                mContentRect.height() / mLabelHeight / 2,
+//                mYStopsBuffer);
+        computeAxisStopsSpecial(
                 mCurrentViewport.top,
                 mCurrentViewport.bottom,
-                mContentRect.height() / mLabelHeight / 2,
+                NumYLabels,
                 mYStopsBuffer);
 
         // Avoid unnecessary allocations during drawing. Re-use allocated
@@ -564,7 +601,8 @@ public class InteractiveLineGraphView extends View {
             mAxisYLinesBuffer[i * 4 + 3] = (float) Math.floor(mAxisYPositionsBuffer[i]);
         }
         canvas.drawLines(mAxisYLinesBuffer, 0, mYStopsBuffer.numStops * 4, mGridPaint);
-
+        canvas.drawLine(0, getDrawY(0), getMeasuredWidth(), getDrawY(0), mGridPaint);
+        canvas.drawLine(mContentRect.left, 0, mContentRect.left, getDrawY(0), mGridPaint);
         // Draws X labels
         int labelOffset;
         int labelLength;
@@ -573,8 +611,10 @@ public class InteractiveLineGraphView extends View {
             // Do not use String.format in high-performance code such as onDraw code.
             labelLength = ChartUtil.formatFloat(mLabelBuffer, mXStopsBuffer.stops[i], mXStopsBuffer.decimals);
             labelOffset = mLabelBuffer.length - labelLength;
+//            int xLables = (int) mXStopsBuffer.stops[i];
+//            String lables = String.format("%d:%02d:%02d", xLables / 3600, (xLables % 3600) / 60, (xLables % 60));
             canvas.drawText(
-                    mLabelBuffer, labelOffset, labelLength,
+                    mLabelBuffer,labelOffset,labelLength,
                     mAxisXPositionsBuffer[i],
                     mContentRect.bottom + mLabelHeight + mLabelSeparation,
                     mLabelTextPaint);
@@ -618,6 +658,39 @@ public class InteractiveLineGraphView extends View {
                 * (y - mCurrentViewport.top) / mCurrentViewport.height();
     }
 
+    public String devLimit() {
+        if (mXStopsBuffer.stops == null)
+            return "";
+        float rate = getCurrentViewport().width() / (AXIS_X_MAX - AXIS_X_MIN);
+        int last = mXStopsBuffer.stops.length - 1 <= 0 ? 0 : mXStopsBuffer.stops.length - 1;
+        return "left:" + mXStopsBuffer.stops[0] + "-- right:" + mXStopsBuffer.stops[last] + ",rate:" + rate + ",decimal:" + mXStopsBuffer.decimals;
+    }
+
+    public float getLeftLimit() {
+        float res = 0;
+        if (mXStopsBuffer.stops == null || mXStopsBuffer.numStops < 2)
+            return res;
+        float pre = mXStopsBuffer.stops[0];
+        float next = mXStopsBuffer.stops[1];
+        res = (float) (mXStopsBuffer.stops[0] - (next - pre));
+        if (res <= 0)
+            return 0;
+        return res;
+    }
+
+    public float getRightLimit() {
+        float res = 0;
+        if (mXStopsBuffer.stops == null || mXStopsBuffer.numStops < 2)
+            return res;
+        int last = mXStopsBuffer.numStops - 1 <= 0 ? 0 : mXStopsBuffer.numStops - 1;
+        float pre = mXStopsBuffer.stops[last - 1];
+        float next = mXStopsBuffer.stops[last];
+        res = (float) (mXStopsBuffer.stops[last] + (next - pre));
+        if (res <= 0)
+            return 0;
+        return res;
+    }
+
     /**
      * Draws the currently visible portion of the data series  to the
      * canvas. This method does not clip its drawing, so users should call {@link Canvas#clipRect
@@ -625,13 +698,23 @@ public class InteractiveLineGraphView extends View {
      */
     private void drawDataSeriesUnclipped(Canvas canvas) {
 
-        canvas.drawCircle(getDrawX(0), getDrawY(0.5f), 20, mDataPaint);
-
-        for (int i = 0; i < mSeriesLinesBuffer.fetchBuffer().size(); i++) {
-            PointF prePoint = mSeriesLinesBuffer.fetchBuffer().get(i);
-            PointF nextPoint = mSeriesLinesBuffer.fetchBuffer().get(i + 1 >= mSeriesLinesBuffer.fetchBuffer().size() ? i : i + 1);
-            canvas.drawLine(getDrawX(prePoint.x), getDrawY(prePoint.y), getDrawX(nextPoint.x), getDrawY(nextPoint.y), mDataPaint);
-            canvas.drawCircle(getDrawX(prePoint.x), getDrawY(prePoint.y), 15, mDataPaint);
+        List<PointF> list = mSeriesLinesBuffer.fetchBuffer(Math.floor(getLeftLimit()), Math.ceil(getRightLimit()));
+        List<PointF> list2 = mSeriesLinesBuffer2.fetchBuffer(Math.floor(getLeftLimit()), Math.ceil(getRightLimit()));
+        if (list.size() != list2.size())
+            return;
+        for (int i = 0; i < list.size(); i++) {
+            drawLine1:
+            {
+                PointF prePoint = list.get(i);
+                PointF nextPoint = list.get((i + 1) >= list.size() ? list.size() - 1 : i + 1);
+                canvas.drawLine(getDrawX(prePoint.x), getDrawY(prePoint.y), getDrawX(nextPoint.x), getDrawY(nextPoint.y), mDataPaint);
+            }
+            drawLine2:
+            {
+                PointF prePoint = list2.get(i);
+                PointF nextPoint = list2.get((i + 1) >= list2.size() ? list2.size() - 1 : i + 1);
+                canvas.drawLine(getDrawX(prePoint.x), getDrawY(prePoint.y), getDrawX(nextPoint.x), getDrawY(nextPoint.y), mDataPaint);
+            }
         }
     }
 
@@ -707,9 +790,9 @@ public class InteractiveLineGraphView extends View {
         }
 
         dest.set(
-                mCurrentViewport.left
+                isXZoomable ? mCurrentViewport.left
                         + mCurrentViewport.width()
-                        * (x - mContentRect.left) / mContentRect.width(), isYZoomable ?
+                        * (x - mContentRect.left) / mContentRect.width() : dest.x, isYZoomable ?
                         mCurrentViewport.top
                                 + mCurrentViewport.height()
                                 * (y - mContentRect.bottom) / -mContentRect.height() : dest.y);
@@ -787,7 +870,6 @@ public class InteractiveLineGraphView extends View {
     @Override
     public void computeScroll() {
         super.computeScroll();
-
         boolean needsInvalidate = false;
 
         if (mScroller.computeScrollOffset()) {
@@ -802,7 +884,6 @@ public class InteractiveLineGraphView extends View {
                     || mCurrentViewport.right < AXIS_X_MAX);
             boolean canScrollY = (mCurrentViewport.top > AXIS_Y_MIN
                     || mCurrentViewport.bottom < AXIS_Y_MAX);
-
             if (canScrollX
                     && currX < 0
                     && mEdgeEffectLeft.isFinished()
@@ -852,9 +933,9 @@ public class InteractiveLineGraphView extends View {
             float pointWithinViewportY = (mZoomFocalPoint.y - mScrollerStartViewport.top)
                     / mScrollerStartViewport.height();
             mCurrentViewport.set(
-                    mZoomFocalPoint.x - newWidth * pointWithinViewportX,
+                    isXZoomable ? mZoomFocalPoint.x - newWidth * pointWithinViewportX : mCurrentViewport.left,
                     isYZoomable ? mZoomFocalPoint.y - newHeight * pointWithinViewportY : mCurrentViewport.top,
-                    mZoomFocalPoint.x + newWidth * (1 - pointWithinViewportX),
+                    isXZoomable ? mZoomFocalPoint.x + newWidth * (1 - pointWithinViewportX) : mCurrentViewport.right,
                     isYZoomable ? mZoomFocalPoint.y + newHeight * (1 - pointWithinViewportY) : mCurrentViewport.bottom);
             constrainViewport();
             needsInvalidate = true;
@@ -919,7 +1000,7 @@ public class InteractiveLineGraphView extends View {
         mZoomer.forceFinished(true);
         mZoomer.startZoom(ZOOM_AMOUNT);
         mZoomFocalPoint.set(
-                (mCurrentViewport.right + mCurrentViewport.left) / 2,
+                isXZoomable ? (mCurrentViewport.right + mCurrentViewport.left) / 2 : (mCurrentViewport.right + mCurrentViewport.left),
                 isYZoomable ? (mCurrentViewport.bottom + mCurrentViewport.top) / 2 : (mCurrentViewport.bottom + mCurrentViewport.top));
         ViewCompat.postInvalidateOnAnimation(this);
     }
@@ -932,7 +1013,7 @@ public class InteractiveLineGraphView extends View {
         mZoomer.forceFinished(true);
         mZoomer.startZoom(-ZOOM_AMOUNT);
         mZoomFocalPoint.set(
-                (mCurrentViewport.right + mCurrentViewport.left) / 2, isYZoomable ?
+                isXZoomable ? (mCurrentViewport.right + mCurrentViewport.left) / 2 : (mCurrentViewport.right + mCurrentViewport.left), isYZoomable ?
                         (mCurrentViewport.bottom + mCurrentViewport.top) / 2 : (mCurrentViewport.bottom + mCurrentViewport.top));
         ViewCompat.postInvalidateOnAnimation(this);
     }

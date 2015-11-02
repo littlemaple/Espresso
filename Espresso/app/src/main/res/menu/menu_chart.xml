@@ -47,4 +47,9 @@
         android:icon="@drawable/ic_action_pan_down"
         android:title="@string/action_pan_down"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_limit"
+        android:icon="@drawable/ic_action_pan_down"
+        android:title="@string/limit"
+        app:showAsAction="never" />
 </menu>

@@ -4,11 +4,11 @@ package com.rainbow.blue.espresso.util;
  * Created by blue on 2015/10/20.
  */
 public class ChartUtil {
-    private static final int POW10[] = {1, 10, 100, 1000, 10000, 100000, 1000000};
     /**
      * The number of individual points (samples) in the chart series to draw onscreen.
      */
     public static final int DRAW_STEPS = 30;
+    private static final int POW10[] = {1, 10, 100, 1000, 10000, 100000, 1000000};
 
     /**
      * The simple math function Y = fun(X) to draw on the chart.
@@ -69,4 +69,6 @@ public class ChartUtil {
         }
         return charCount;
     }
+
+
 }

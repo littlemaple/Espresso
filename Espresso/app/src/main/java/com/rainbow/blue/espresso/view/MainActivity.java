@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(this,LineChartActivity.class));
     }
 
 
@@ -58,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         }
         if (id == R.id.action_line) {
             startActivity(new Intent(MainActivity.this, LineChartActivity.class));
+            return true;
+        }
+        if (id == R.id.action_gradient) {
+            startActivity(new Intent(MainActivity.this, GradientActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

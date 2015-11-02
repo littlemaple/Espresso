@@ -18,6 +18,7 @@ package com.rainbow.blue.espresso.view;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -66,6 +67,9 @@ public class LineChartActivity extends AppCompatActivity {
             case R.id.action_pan_down:
                 mGraphView.panDown();
                 return true;
+            case R.id.action_limit:
+                Log.d(getClass().getSimpleName(), "" + mGraphView.devLimit());
+                break;
         }
 
         return super.onOptionsItemSelected(item);

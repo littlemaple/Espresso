@@ -1,6 +1,7 @@
 package com.rainbow.blue.espresso.chart;
 
 import android.graphics.PointF;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,6 +12,7 @@ import java.util.List;
  */
 public class Series {
     public static final int INVALID = -1;
+    public static final int DEV_POINTS = 12 * 60 * 30;
     private static final float DECIMAL = 1;
     private List<PointF> content = new ArrayList<>();
     private String title;
@@ -19,10 +21,10 @@ public class Series {
         this.title = title;
     }
 
+
     public Series() {
         this.title = "default";
     }
-
 
     public String getTitle() {
         return this.title;
@@ -31,7 +33,6 @@ public class Series {
     public int size() {
         return content.size();
     }
-
 
     /**
      * @param point
@@ -74,8 +75,12 @@ public class Series {
      * @return
      */
     public List<PointF> fetchBuffer(float start, float end, float decimal) {
-        if (start > end)
-            throw new IllegalArgumentException("the start can not be large than end");
+        if (start > end) {
+            Log.e("series", String.format("the start:%s can not be large than end: %s", start, end));
+            float tmp = start;
+            start = end;
+            end = tmp;
+        }
         List<PointF> list = new ArrayList<>();
         for (PointF point : content) {
             if (point.x >= (start - decimal) && point.x <= end + decimal) {
@@ -107,10 +112,15 @@ public class Series {
     /**
      * add data for developer
      */
-    public void devInitData() {
-        for (int i = -10; i < 10; i++) {
-            addPoint(i * 0.1f, (float) i / 10 % 0.3f);
+    public void devInitData(int start) {
+        for (int i = 0; i < DEV_POINTS; i++) {
+            addPoint(i * 2, (float) (start + Math.random() * 4));
         }
     }
+
+    public enum Mode {
+        Sec, Min;
+    }
+
 
 }

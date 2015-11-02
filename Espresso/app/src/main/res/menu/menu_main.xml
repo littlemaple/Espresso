@@ -32,4 +32,9 @@
         android:orderInCategory="100"
         android:title="@string/line"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_gradient"
+        android:orderInCategory="100"
+        android:title="@string/gradient"
+        app:showAsAction="never" />
 </menu>
