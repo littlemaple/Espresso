@@ -71,4 +71,16 @@ public class ChartUtil {
     }
 
 
+    public static String formatDuration(int seconds) {
+        int hour = seconds / 3600;
+        if (hour > 0) {
+            int min = (seconds % 3600) / 60;
+            int second = seconds % 60;
+            return hour + "h" + min + "m" + second + "s";
+        } else {
+            int min = (seconds % 3600) / 60;
+            int second = seconds % 60;
+            return min + "m" + second + "s";
+        }
+    }
 }

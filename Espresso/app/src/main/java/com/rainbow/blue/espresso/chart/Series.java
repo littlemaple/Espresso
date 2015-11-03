@@ -12,7 +12,8 @@ import java.util.List;
  */
 public class Series {
     public static final int INVALID = -1;
-    public static final int DEV_POINTS = 12 * 60 * 30;
+    public static final int DEV_POINTS_Sec = 12 * 60 * 30;
+    public static final int DEV_POINTS_Min = 12 * 60;
     private static final float DECIMAL = 1;
     private List<PointF> content = new ArrayList<>();
     private String title;
@@ -112,15 +113,16 @@ public class Series {
     /**
      * add data for developer
      */
-    public void devInitData(int start) {
-        for (int i = 0; i < DEV_POINTS; i++) {
-            addPoint(i * 2, (float) (start + Math.random() * 4));
+    public void devInitDataMin(int start) {
+        for (int i = 0; i < DEV_POINTS_Min; i++) {
+            addPoint(i * 60, (float) (start + Math.random() * 4));
         }
     }
 
-    public enum Mode {
-        Sec, Min;
+    public void devInitDataSec(int start) {
+        for (int i = 0; i < DEV_POINTS_Sec; i++) {
+            addPoint(i * 2, (float) (start + Math.random() * 4));
+        }
     }
-
 
 }

@@ -44,37 +44,6 @@ import com.rainbow.blue.espresso.util.ChartUtil;
 
 import java.util.List;
 
-/**
- * A view representing a simple yet interactive line chart for the function <code>x^3 - x/4</code>.
- * <p/>
- * This view isn't all that useful on its own; rather it serves as an example of how to correctly
- * implement these types of gestures to perform zooming and scrolling with interesting content
- * types.
- * <p/>
- * The view is interactive in that it can be zoomed and panned using
- * typical <a href="http://developer.android.com/design/patterns/gestures.html">gestures</a> such
- * as double-touch, drag, pinch-open, and pinch-close. This is done using the
- * {@link ScaleGestureDetector}, {@link GestureDetector}, and {@link OverScroller} classes. Note
- * that the platform-provided view scrolling behavior (e.g. {@link View#scrollBy(int, int)} is NOT
- * used.
- * <p/>
- * The view also demonstrates the correct use of
- * <a href="http://developer.android.com/design/style/touch-feedback.html">touch feedback</a> to
- * indicate to users that they've reached the content edges after a pan or fling gesture. This
- * is done using the {@link EdgeEffectCompat} class.
- * <p/>
- * Finally, this class demonstrates the basics of creating a custom view, including support for
- * custom attributes (see the constructors), a simple implementation for
- * {@link #onMeasure(int, int)}, an implementation for {@link #onSaveInstanceState()} and a fairly
- * straightforward {@link Canvas}-based rendering implementation in
- * {@link #onDraw(Canvas)}.
- * <p/>
- * Note that this view doesn't automatically support directional navigation or other accessibility
- * methods. Activities using this view should generally provide alternate navigation controls.
- * Activities using this view should also present an alternate, text-based representation of this
- * view's content for vision-impaired users.
- */
-@SuppressWarnings("ALL")
 public class InteractiveLineGraphView extends View {
     private static final String TAG = "Interactive";
 
@@ -95,41 +64,19 @@ public class InteractiveLineGraphView extends View {
      * @see #zoomIn()
      * @see #zoomOut()
      */
-    private static final float ZOOM_AMOUNT = 1f;
-    private static final int NumYLabels = 12;
+    private static final float ZOOM_AMOUNT = 0.75f;
+    private static final int NumYLabels = 13;
     private static float VIEW_PORT_AXIS_X_MIN = 0;
-    private static float VIEW_PORT_AXIS_X_MAX = 30 * 60;
+    private static float VIEW_PORT_AXIS_X_MAX = 4 * 60 * 60;
     // Viewport extremes. See mCurrentViewport for a discussion of the viewport.
     private static float AXIS_X_MIN = 0f;
     private static float AXIS_X_MAX = 5f;
     private static float AXIS_Y_MIN = 0f;
-    private static float AXIS_Y_MAX = 12f;
+    private static float AXIS_Y_MAX = 13f;
     // Buffers for storing current X and Y stops. See the computeAxisStops method for more details.
     private final AxisStops mXStopsBuffer = new AxisStops();
     private final AxisStops mYStopsBuffer = new AxisStops();
     private final char[] mLabelBuffer = new char[100];
-    /**
-     * The current viewport. This rectangle represents the currently visible chart domain
-     * and range. The currently visible chart X values are from this rectangle's left to its right.
-     * The currently visible chart Y values are from this rectangle's top to its bottom.
-     * <p/>
-     * Note that this rectangle's top is actually the smaller Y value, and its bottom is the larger
-     * Y value. Since the chart is drawn onscreen in such a way that chart Y values increase
-     * towards the top of the screen (decreasing pixel Y positions), this rectangle's "top" is drawn
-     * above this rectangle's "bottom" value.
-     *
-     * @see #mContentRect
-     */
-    private RectF mCurrentViewport = new RectF(VIEW_PORT_AXIS_X_MIN, AXIS_Y_MIN, VIEW_PORT_AXIS_X_MAX, AXIS_Y_MAX);
-    /**
-     * The current destination rectangle (in pixel coordinates) into which the chart data should
-     * be drawn. Chart labels are drawn outside this area.
-     *
-     * @see #mCurrentViewport
-     */
-    private Rect mContentRect = new Rect();
-    private boolean isYZoomable = false;
-    private boolean isXZoomable = true;
     /**
      * The scale listener, used for handling multi-finger scale gestures.
      */
@@ -155,39 +102,61 @@ public class InteractiveLineGraphView extends View {
 
         @Override
         public boolean onScale(ScaleGestureDetector scaleGestureDetector) {
-            float spanX = ScaleGestureDetectorCompat.getCurrentSpanX(scaleGestureDetector);
-            float spanY = ScaleGestureDetectorCompat.getCurrentSpanY(scaleGestureDetector);
-            float newWidth = lastSpanX / spanX * mCurrentViewport.width();
-            float newHeight = lastSpanY / spanY * mCurrentViewport.height();
+//            float spanX = ScaleGestureDetectorCompat.getCurrentSpanX(scaleGestureDetector);
+//            float spanY = ScaleGestureDetectorCompat.getCurrentSpanY(scaleGestureDetector);
+//            float newWidth = lastSpanX / spanX * mCurrentViewport.width();
+//            float newHeight = lastSpanY / spanY * mCurrentViewport.height();
 
             float span = scaleGestureDetector.getCurrentSpan();
 
 
-            float originHeight = mCurrentViewport.height();
-            float originWidth = mCurrentViewport.width();
-            float focusX = scaleGestureDetector.getFocusX();
-            float focusY = scaleGestureDetector.getFocusY();
-            hitTest(focusX, focusY, viewportFocus);
-
-            mCurrentViewport.set(
-                    isXZoomable ? viewportFocus.x
-                            - newWidth * (focusX - mContentRect.left)
-                            / mContentRect.width() : mCurrentViewport.left, isYZoomable ?
-                            viewportFocus.y
-                                    - newHeight * (mContentRect.bottom - focusY)
-                                    / mContentRect.height() : mCurrentViewport.top,
-                    0,
-                    0);
-            mCurrentViewport.right = mCurrentViewport.left + (isXZoomable ? newWidth : originWidth);
-            mCurrentViewport.bottom = mCurrentViewport.top + (isYZoomable ? newHeight : originHeight);
-            constrainViewport();
-            ViewCompat.postInvalidateOnAnimation(InteractiveLineGraphView.this);
-
-            lastSpanX = spanX;
-            lastSpanY = spanY;
+//            float originHeight = mCurrentViewport.height();
+//            float originWidth = mCurrentViewport.width();
+//            float focusX = scaleGestureDetector.getFocusX();
+//            float focusY = scaleGestureDetector.getFocusY();
+//            hitTest(focusX, focusY, viewportFocus);
+//
+//            mCurrentViewport.set(
+//                    isXZoomable ? viewportFocus.x
+//                            - newWidth * (focusX - mContentRect.left)
+//                            / mContentRect.width() : mCurrentViewport.left, isYZoomable ?
+//                            viewportFocus.y
+//                                    - newHeight * (mContentRect.bottom - focusY)
+//                                    / mContentRect.height() : mCurrentViewport.top,
+//                    0,
+//                    0);
+//            mCurrentViewport.right = mCurrentViewport.left + (isXZoomable ? newWidth : originWidth);
+//            mCurrentViewport.bottom = mCurrentViewport.top + (isYZoomable ? newHeight : originHeight);
+//            constrainViewport();
+//            ViewCompat.postInvalidateOnAnimation(InteractiveLineGraphView.this);
+//
+//            lastSpanX = spanX;
+//            lastSpanY = spanY;
             return true;
         }
     };
+    /**
+     * The current viewport. This rectangle represents the currently visible chart domain
+     * and range. The currently visible chart X values are from this rectangle's left to its right.
+     * The currently visible chart Y values are from this rectangle's top to its bottom.
+     * <p/>
+     * Note that this rectangle's top is actually the smaller Y value, and its bottom is the larger
+     * Y value. Since the chart is drawn onscreen in such a way that chart Y values increase
+     * towards the top of the screen (decreasing pixel Y positions), this rectangle's "top" is drawn
+     * above this rectangle's "bottom" value.
+     *
+     * @see #mContentRect
+     */
+    private RectF mCurrentViewport = new RectF(VIEW_PORT_AXIS_X_MIN, AXIS_Y_MIN, VIEW_PORT_AXIS_X_MAX, AXIS_Y_MAX);
+    /**
+     * The current destination rectangle (in pixel coordinates) into which the chart data should
+     * be drawn. Chart labels are drawn outside this area.
+     *
+     * @see #mCurrentViewport
+     */
+    private Rect mContentRect = new Rect();
+    private boolean isYZoomable = false;
+    private boolean isXZoomable = true;
     private boolean isYScrollable = false;
     // Current attribute values and Paints.
     private float mLabelTextSize;
@@ -245,11 +214,11 @@ public class InteractiveLineGraphView extends View {
 
         @Override
         public boolean onDoubleTap(MotionEvent e) {
-            mZoomer.forceFinished(true);
-            if (hitTest(e.getX(), e.getY(), mZoomFocalPoint)) {
-                mZoomer.startZoom(ZOOM_AMOUNT);
-            }
-            ViewCompat.postInvalidateOnAnimation(InteractiveLineGraphView.this);
+//            mZoomer.forceFinished(true);
+//            if (hitTest(e.getX(), e.getY(), mZoomFocalPoint)) {
+//                mZoomer.startZoom(ZOOM_AMOUNT);
+//            }
+//            ViewCompat.postInvalidateOnAnimation(InteractiveLineGraphView.this);
             return true;
         }
 
@@ -308,18 +277,21 @@ public class InteractiveLineGraphView extends View {
         }
     };
     private boolean isDrawContainer = false;
-    private Series mSeriesLinesBuffer;
-    private Series mSeriesLinesBuffer2;
-
-    public InteractiveLineGraphView(Context context) {
-        this(context, null, 0);
-    }
+    private Series mSeriesLinesBufferSec;
+    private Series mSeriesLinesBuffer2Sec;
+    private Series mSeriesLinesBufferMin;
+    private Series mSeriesLinesBuffer2Min;
+    private Mode mode = Mode.Min;
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //
     //     Methods and objects related to drawing
     //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    public InteractiveLineGraphView(Context context) {
+        this(context, null, 0);
+    }
 
     public InteractiveLineGraphView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -449,10 +421,15 @@ public class InteractiveLineGraphView extends View {
     }
 
     private void initData() {
-        mSeriesLinesBuffer = new Series();
-        mSeriesLinesBuffer2 = new Series();
-        mSeriesLinesBuffer.devInitData(0);
-        mSeriesLinesBuffer2.devInitData(7);
+        mSeriesLinesBufferSec = new Series();
+        mSeriesLinesBuffer2Sec = new Series();
+        mSeriesLinesBufferSec.devInitDataSec(0);
+        mSeriesLinesBuffer2Sec.devInitDataSec(7);
+
+        mSeriesLinesBufferMin = new Series();
+        mSeriesLinesBuffer2Min = new Series();
+        mSeriesLinesBufferMin.devInitDataMin(0);
+        mSeriesLinesBuffer2Min.devInitDataMin(7);
 
         // Viewport extremes. See mCurrentViewport for a discussion of the viewport.
         AXIS_X_MIN = 0;
@@ -539,6 +516,12 @@ public class InteractiveLineGraphView extends View {
             canvas.drawRect(mContentRect, mAxisPaint);
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //
+    //     Methods and objects related to gesture handling
+    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Draws the chart axes and labels onto the canvas.
      */
@@ -570,8 +553,8 @@ public class InteractiveLineGraphView extends View {
         if (mAxisYPositionsBuffer.length < mYStopsBuffer.numStops) {
             mAxisYPositionsBuffer = new float[mYStopsBuffer.numStops];
         }
-        if (mAxisXLinesBuffer.length < mXStopsBuffer.numStops * 4) {
-            mAxisXLinesBuffer = new float[mXStopsBuffer.numStops * 4];
+        if (mAxisXLinesBuffer.length < mXStopsBuffer.numStops * 8) {
+            mAxisXLinesBuffer = new float[mXStopsBuffer.numStops * 8];
         }
         if (mAxisYLinesBuffer.length < mYStopsBuffer.numStops * 4) {
             mAxisYLinesBuffer = new float[mYStopsBuffer.numStops * 4];
@@ -587,14 +570,21 @@ public class InteractiveLineGraphView extends View {
 
         // Draws grid lines using drawLines (faster than individual drawLine calls)
         for (i = 0; i < mXStopsBuffer.numStops; i++) {
-            mAxisXLinesBuffer[i * 4 + 0] = (float) Math.floor(mAxisXPositionsBuffer[i]);
-            mAxisXLinesBuffer[i * 4 + 1] = mContentRect.top;
-            mAxisXLinesBuffer[i * 4 + 2] = (float) Math.floor(mAxisXPositionsBuffer[i]);
-            mAxisXLinesBuffer[i * 4 + 3] = mContentRect.bottom;
+            mAxisXLinesBuffer[i * 8 + 0] = (float) Math.floor(mAxisXPositionsBuffer[i]);
+            mAxisXLinesBuffer[i * 8 + 1] = mContentRect.top;
+            mAxisXLinesBuffer[i * 8 + 2] = (float) Math.floor(mAxisXPositionsBuffer[i]);
+            mAxisXLinesBuffer[i * 8 + 3] = getDrawY(7);
+
+            mAxisXLinesBuffer[i * 8 + 4] = (float) Math.floor(mAxisXPositionsBuffer[i]);
+            mAxisXLinesBuffer[i * 8 + 5] = getDrawY(4);
+            mAxisXLinesBuffer[i * 8 + 6] = (float) Math.floor(mAxisXPositionsBuffer[i]);
+            mAxisXLinesBuffer[i * 8 + 7] = mContentRect.bottom;
         }
-        canvas.drawLines(mAxisXLinesBuffer, 0, mXStopsBuffer.numStops * 4, mGridPaint);
+        canvas.drawLines(mAxisXLinesBuffer, 0, mXStopsBuffer.numStops * 8, mGridPaint);
 
         for (i = 0; i < mYStopsBuffer.numStops; i++) {
+            if (mYStopsBuffer.stops[i] == 5 || mYStopsBuffer.stops[i] == 6)
+                continue;
             mAxisYLinesBuffer[i * 4 + 0] = mContentRect.left;
             mAxisYLinesBuffer[i * 4 + 1] = (float) Math.floor(mAxisYPositionsBuffer[i]);
             mAxisYLinesBuffer[i * 4 + 2] = mContentRect.right;
@@ -602,7 +592,8 @@ public class InteractiveLineGraphView extends View {
         }
         canvas.drawLines(mAxisYLinesBuffer, 0, mYStopsBuffer.numStops * 4, mGridPaint);
         canvas.drawLine(0, getDrawY(0), getMeasuredWidth(), getDrawY(0), mGridPaint);
-        canvas.drawLine(mContentRect.left, 0, mContentRect.left, getDrawY(0), mGridPaint);
+        canvas.drawLine(mContentRect.left, 0, mContentRect.left, getDrawY(7), mGridPaint);
+        canvas.drawLine(mContentRect.left, getDrawY(4), mContentRect.left, getDrawY(0), mGridPaint);
         // Draws X labels
         int labelOffset;
         int labelLength;
@@ -611,34 +602,41 @@ public class InteractiveLineGraphView extends View {
             // Do not use String.format in high-performance code such as onDraw code.
             labelLength = ChartUtil.formatFloat(mLabelBuffer, mXStopsBuffer.stops[i], mXStopsBuffer.decimals);
             labelOffset = mLabelBuffer.length - labelLength;
-//            int xLables = (int) mXStopsBuffer.stops[i];
-//            String lables = String.format("%d:%02d:%02d", xLables / 3600, (xLables % 3600) / 60, (xLables % 60));
             canvas.drawText(
-                    mLabelBuffer,labelOffset,labelLength,
+                    mLabelBuffer, labelOffset, labelLength,
                     mAxisXPositionsBuffer[i],
                     mContentRect.bottom + mLabelHeight + mLabelSeparation,
                     mLabelTextPaint);
+//            canvas.drawText(
+//                    ChartUtil.formatDuration((int) mXStopsBuffer.stops[i]),
+//                    mAxisXPositionsBuffer[i],
+//                    mContentRect.bottom + mLabelHeight + mLabelSeparation,
+//                    mLabelTextPaint);
         }
 
         // Draws Y labels
         mLabelTextPaint.setTextAlign(Paint.Align.RIGHT);
         for (i = 0; i < mYStopsBuffer.numStops; i++) {
+            if (mYStopsBuffer.stops[i] == 6 || mYStopsBuffer.stops[i] == 5)
+                continue;
             // Do not use String.format in high-performance code such as onDraw code.
-            labelLength = ChartUtil.formatFloat(mLabelBuffer, mYStopsBuffer.stops[i], mYStopsBuffer.decimals);
-            labelOffset = mLabelBuffer.length - labelLength;
-            canvas.drawText(
-                    mLabelBuffer, labelOffset, labelLength,
-                    mContentRect.left - mLabelSeparation,
-                    mAxisYPositionsBuffer[i] + mLabelHeight / 2,
-                    mLabelTextPaint);
+//            labelLength = ChartUtil.formatFloat(mLabelBuffer, mYStopsBuffer.stops[i], mYStopsBuffer.decimals);
+//            labelOffset = mLabelBuffer.length - labelLength;
+            if (mYStopsBuffer.stops[i] >= 1 && mYStopsBuffer.stops[i] <= 4) {
+                canvas.drawText(
+                        (int) mYStopsBuffer.stops[i] * 25 + 25 + "",
+                        mContentRect.left - mLabelSeparation,
+                        mAxisYPositionsBuffer[i] + mLabelHeight / 2,
+                        mLabelTextPaint);
+            } else if (mYStopsBuffer.stops[i] >= 8 && mYStopsBuffer.stops[i] <= 12) {
+                canvas.drawText(
+                        (int) (mYStopsBuffer.stops[i] - 7) * 5 + 75 + "",
+                        mContentRect.left - mLabelSeparation,
+                        mAxisYPositionsBuffer[i] + mLabelHeight / 2,
+                        mLabelTextPaint);
+            }
         }
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    //
-    //     Methods and objects related to gesture handling
-    //
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Computes the pixel offset for the given X chart value. This may be outside the view bounds.
@@ -697,9 +695,15 @@ public class InteractiveLineGraphView extends View {
      * before calling this method.
      */
     private void drawDataSeriesUnclipped(Canvas canvas) {
-
-        List<PointF> list = mSeriesLinesBuffer.fetchBuffer(Math.floor(getLeftLimit()), Math.ceil(getRightLimit()));
-        List<PointF> list2 = mSeriesLinesBuffer2.fetchBuffer(Math.floor(getLeftLimit()), Math.ceil(getRightLimit()));
+        List<PointF> list;
+        List<PointF> list2;
+        if (mode == Mode.Min) {
+            list = mSeriesLinesBufferMin.fetchBuffer(Math.floor(getLeftLimit()), Math.ceil(getRightLimit()));
+            list2 = mSeriesLinesBuffer2Min.fetchBuffer(Math.floor(getLeftLimit()), Math.ceil(getRightLimit()));
+        } else {
+            list = mSeriesLinesBufferSec.fetchBuffer(Math.floor(getLeftLimit()), Math.ceil(getRightLimit()));
+            list2 = mSeriesLinesBuffer2Sec.fetchBuffer(Math.floor(getLeftLimit()), Math.ceil(getRightLimit()));
+        }
         if (list.size() != list2.size())
             return;
         for (int i = 0; i < list.size(); i++) {
@@ -996,12 +1000,20 @@ public class InteractiveLineGraphView extends View {
      * Smoothly zooms the chart in one step.
      */
     public void zoomIn() {
-        mScrollerStartViewport.set(mCurrentViewport);
-        mZoomer.forceFinished(true);
-        mZoomer.startZoom(ZOOM_AMOUNT);
-        mZoomFocalPoint.set(
-                isXZoomable ? (mCurrentViewport.right + mCurrentViewport.left) / 2 : (mCurrentViewport.right + mCurrentViewport.left),
-                isYZoomable ? (mCurrentViewport.bottom + mCurrentViewport.top) / 2 : (mCurrentViewport.bottom + mCurrentViewport.top));
+        if (mode == Mode.Sec)
+            return;
+        mode = Mode.Sec;
+        float center = (mCurrentViewport.left + mCurrentViewport.right) / 2;
+        VIEW_PORT_AXIS_X_MIN = 0;
+        VIEW_PORT_AXIS_X_MAX = 10 * 60;
+        mCurrentViewport.left = (center - 5 * 60) < AXIS_X_MIN ? AXIS_X_MIN : center - 5 * 60;
+        mCurrentViewport.right = (center + 5 * 60) > AXIS_X_MAX ? AXIS_X_MAX : center + 5 * 60;
+//        mScrollerStartViewport.set(mCurrentViewport);
+//        mZoomer.forceFinished(true);
+//        mZoomer.startZoom(ZOOM_AMOUNT);
+//        mZoomFocalPoint.set(
+//                isXZoomable ? (mCurrentViewport.right + mCurrentViewport.left) / 2 : (mCurrentViewport.right + mCurrentViewport.left),
+//                isYZoomable ? (mCurrentViewport.bottom + mCurrentViewport.top) / 2 : (mCurrentViewport.bottom + mCurrentViewport.top));
         ViewCompat.postInvalidateOnAnimation(this);
     }
 
@@ -1009,12 +1021,20 @@ public class InteractiveLineGraphView extends View {
      * Smoothly zooms the chart out one step.
      */
     public void zoomOut() {
-        mScrollerStartViewport.set(mCurrentViewport);
-        mZoomer.forceFinished(true);
-        mZoomer.startZoom(-ZOOM_AMOUNT);
-        mZoomFocalPoint.set(
-                isXZoomable ? (mCurrentViewport.right + mCurrentViewport.left) / 2 : (mCurrentViewport.right + mCurrentViewport.left), isYZoomable ?
-                        (mCurrentViewport.bottom + mCurrentViewport.top) / 2 : (mCurrentViewport.bottom + mCurrentViewport.top));
+        if (mode == Mode.Min)
+            return;
+        mode = Mode.Min;
+        float center = (mCurrentViewport.left + mCurrentViewport.right) / 2;
+        VIEW_PORT_AXIS_X_MIN = 0;
+        VIEW_PORT_AXIS_X_MAX = 4 * 60 * 60;
+        mCurrentViewport.left = (center - 2 * 60 * 60) < AXIS_X_MIN ? AXIS_X_MIN : center - 2 * 60 * 60;
+        mCurrentViewport.right = (center + 2 * 60 * 60) > AXIS_X_MAX ? AXIS_X_MAX : center + 2 * 60 * 60;
+//        mScrollerStartViewport.set(mCurrentViewport);
+//        mZoomer.forceFinished(true);
+//        mZoomer.startZoom(-ZOOM_AMOUNT);
+//        mZoomFocalPoint.set(
+//                isXZoomable ? (mCurrentViewport.right + mCurrentViewport.left) / 2 : (mCurrentViewport.right + mCurrentViewport.left), isYZoomable ?
+//                        (mCurrentViewport.bottom + mCurrentViewport.top) / 2 : (mCurrentViewport.bottom + mCurrentViewport.top));
         ViewCompat.postInvalidateOnAnimation(this);
     }
 

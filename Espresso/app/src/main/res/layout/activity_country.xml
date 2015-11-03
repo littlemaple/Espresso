@@ -4,8 +4,20 @@
     android:orientation="vertical">
 
     <com.rainbow.blue.espresso.widget.GradientView
+        android:id="@+id/gradient_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="setValue"
+        android:id="@+id/button3"
+        android:onClick="setValue"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
