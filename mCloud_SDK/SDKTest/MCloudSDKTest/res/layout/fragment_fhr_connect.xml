@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/white"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/fhr_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/pic_fetal_insert_device"
+                android:contentDescription="@string/todo" />
+
+            <TextView
+                android:id="@+id/tv_hint"
+                style="@style/SettingKeyStyle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingBottom="@dimen/et_connect_flag_text_margin_botom"
+                android:paddingTop="@dimen/et_connect_flag_text_margin_top"
+                android:text="@string/measure_fhr_insert_in" />
+
+            <Button
+                android:id="@+id/btn_fetalheart_start"
+                android:layout_width="@dimen/pressure_connection_strat_width"
+                android:layout_height="@dimen/pressure_connection_strat_high"
+                android:layout_gravity="center"
+                android:background="@drawable/select_connect_start"
+                android:enabled="false"
+                android:text="@string/recording_fhr"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_connection_start_text" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/constans_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="@string/constans_version"
+        android:textColor="#c8c8c8"
+        android:textSize="11sp" />
+
+</FrameLayout>

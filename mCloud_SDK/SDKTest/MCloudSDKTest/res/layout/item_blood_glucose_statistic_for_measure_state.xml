@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="凌晨"
+        android:textSize="@dimen/font_pressure_history_list_small"
+        android:textStyle="bold" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/pressure_history_trend_month_time_margin"
+        android:layout_marginTop="@dimen/pressure_history_trend_month_time_margin"
+        android:text="共检测12次：偏低1次，正常10次，偏高1次"
+        android:textColor="#80000000"
+        android:textSize="@dimen/font_pressure_history_list_small">
+    </TextView>
+
+</LinearLayout>

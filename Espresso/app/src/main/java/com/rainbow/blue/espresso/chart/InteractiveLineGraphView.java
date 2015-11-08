@@ -173,7 +173,8 @@ public class InteractiveLineGraphView extends View {
     private Paint mAxisPaint;
     private float mDataThickness;
     private int mDataColor;
-    private Paint mDataPaint;
+    private Paint mSeries1Paint;
+    private Paint mSeries2Paint;
     // State objects and values related to gesture tracking.
     private ScaleGestureDetector mScaleGestureDetector;
     private GestureDetectorCompat mGestureDetector;
@@ -371,7 +372,7 @@ public class InteractiveLineGraphView extends View {
      *                 space; the more space there is, the more stops should be shown.
      * @param outStops The destination {@link AxisStops} object to populate.
      */
-    private static void computeAxisStops(float start, float stop, int steps, AxisStops outStops) {
+    private void computeAxisStops(float start, float stop, int steps, AxisStops outStops) {
 //        Log.d(TAG, "pre-->computeAxisStops start:" + start + ",stop:" + stop + ",step:" + steps);
         double range = stop - start;
         if (steps == 0 || range <= 0) {
@@ -383,14 +384,15 @@ public class InteractiveLineGraphView extends View {
         }
 
         double rawInterval = range / steps;
-        double interval = ChartUtil.roundToOneSignificantFigure(rawInterval);
-        double intervalMagnitude = Math.pow(10, (int) Math.log10(interval));
-        int intervalSigDigit = (int) (interval / intervalMagnitude);
-        if (intervalSigDigit > 5) {
-            // Use one order of magnitude higher, to avoid intervals like 0.9 or 90
-            interval = Math.floor(10 * intervalMagnitude);
-        }
+//        double interval = ChartUtil.roundToOneSignificantFigure(rawInterval);
+//        double intervalMagnitude = Math.pow(10, (int) Math.log10(interval));
+//        int intervalSigDigit = (int) (interval / intervalMagnitude);
+//        if (intervalSigDigit > 5) {
+//            // Use one order of magnitude higher, to avoid intervals like 0.9 or 90
+//            interval = Math.floor(10 * intervalMagnitude);
+//        }
 
+        double interval = (mode == Mode.Min ? 60 * 60 : 2 * 60);
         double first = Math.ceil(start / interval) * interval;
         double last = Math.nextUp(Math.floor(stop / interval) * interval);
         double f;
@@ -458,11 +460,17 @@ public class InteractiveLineGraphView extends View {
         mAxisPaint.setColor(mAxisColor);
         mAxisPaint.setStyle(Paint.Style.STROKE);
 
-        mDataPaint = new Paint();
-        mDataPaint.setStrokeWidth(mDataThickness);
-        mDataPaint.setColor(mDataColor);
-        mDataPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        mDataPaint.setAntiAlias(true);
+        mSeries1Paint = new Paint();
+        mSeries1Paint.setStrokeWidth(mDataThickness);
+        mSeries1Paint.setColor(mDataColor);
+        mSeries1Paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mSeries1Paint.setAntiAlias(true);
+
+        mSeries2Paint = new Paint();
+        mSeries2Paint.setStrokeWidth(mDataThickness);
+        mSeries2Paint.setColor(mDataColor);
+        mSeries2Paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mSeries2Paint.setAntiAlias(true);
 
 
     }
@@ -534,22 +542,17 @@ public class InteractiveLineGraphView extends View {
                 mCurrentViewport.right,
                 mContentRect.width() / mMaxLabelWidth / 2,
                 mXStopsBuffer);
-//        computeAxisStops(
-//                mCurrentViewport.top,
-//                mCurrentViewport.bottom,
-//                mContentRect.height() / mLabelHeight / 2,
-//                mYStopsBuffer);
         computeAxisStopsSpecial(
                 mCurrentViewport.top,
                 mCurrentViewport.bottom,
                 NumYLabels,
                 mYStopsBuffer);
 
-        // Avoid unnecessary allocations during drawing. Re-use allocated
-        // arrays and only reallocate if the number of stops grows.
+
         if (mAxisXPositionsBuffer.length < mXStopsBuffer.numStops) {
             mAxisXPositionsBuffer = new float[mXStopsBuffer.numStops];
         }
+
         if (mAxisYPositionsBuffer.length < mYStopsBuffer.numStops) {
             mAxisYPositionsBuffer = new float[mYStopsBuffer.numStops];
         }
@@ -597,6 +600,7 @@ public class InteractiveLineGraphView extends View {
         // Draws X labels
         int labelOffset;
         int labelLength;
+
         mLabelTextPaint.setTextAlign(Paint.Align.CENTER);
         for (i = 0; i < mXStopsBuffer.numStops; i++) {
             // Do not use String.format in high-performance code such as onDraw code.
@@ -607,11 +611,6 @@ public class InteractiveLineGraphView extends View {
                     mAxisXPositionsBuffer[i],
                     mContentRect.bottom + mLabelHeight + mLabelSeparation,
                     mLabelTextPaint);
-//            canvas.drawText(
-//                    ChartUtil.formatDuration((int) mXStopsBuffer.stops[i]),
-//                    mAxisXPositionsBuffer[i],
-//                    mContentRect.bottom + mLabelHeight + mLabelSeparation,
-//                    mLabelTextPaint);
         }
 
         // Draws Y labels
@@ -711,13 +710,13 @@ public class InteractiveLineGraphView extends View {
             {
                 PointF prePoint = list.get(i);
                 PointF nextPoint = list.get((i + 1) >= list.size() ? list.size() - 1 : i + 1);
-                canvas.drawLine(getDrawX(prePoint.x), getDrawY(prePoint.y), getDrawX(nextPoint.x), getDrawY(nextPoint.y), mDataPaint);
+                canvas.drawLine(getDrawX(prePoint.x), getDrawY(prePoint.y), getDrawX(nextPoint.x), getDrawY(nextPoint.y), mSeries1Paint);
             }
             drawLine2:
             {
                 PointF prePoint = list2.get(i);
                 PointF nextPoint = list2.get((i + 1) >= list2.size() ? list2.size() - 1 : i + 1);
-                canvas.drawLine(getDrawX(prePoint.x), getDrawY(prePoint.y), getDrawX(nextPoint.x), getDrawY(nextPoint.y), mDataPaint);
+                canvas.drawLine(getDrawX(prePoint.x), getDrawY(prePoint.y), getDrawX(nextPoint.x), getDrawY(nextPoint.y), mSeries1Paint);
             }
         }
     }

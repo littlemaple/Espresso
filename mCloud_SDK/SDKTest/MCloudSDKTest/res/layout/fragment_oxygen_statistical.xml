@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/ll_30day_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="75dp"
+        android:gravity="center_horizontal"
+         android:background="#ffffff"
+        android:orientation="vertical" 
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dear_user_hint" 
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/recently_30day_toast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="@string/dear_user_no_data_hint" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:max="200"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_button_height"
+            android:layout_below="@id/seekBar1"
+            android:background="#F7F7F7"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="20dp"
+            android:text="近7天"
+            android:textSize="@dimen/chart_size5" />
+
+        <TextView
+            android:id="@+id/recently_7day_toast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_header"
+            android:background="#ffffff"
+            android:gravity="center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:text="@string/near_seven_no_data_hint"
+            android:textSize="@dimen/chart_size7"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_7day_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_header"
+            android:background="@android:color/white"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_button_height"
+                android:layout_marginBottom="15dp"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp" >
+
+                <TextView
+                    android:id="@+id/tv_statistical_total_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="@string/statistical_total_hint"
+                    android:textSize="@dimen/chart_size7" />
+
+                <TextView
+                    android:id="@+id/tv_statistical_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="20dp"
+                    android:text="11"
+                    android:textSize="@dimen/chart_size6" />
+                <!-- 异常 -->
+
+                <TextView
+                    android:id="@+id/tv_statistical_abnormal_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:text="@string/statistical_abnormal_hint"
+                    android:textSize="@dimen/chart_size7" />
+
+                <TextView
+                    android:id="@+id/tv_statistical_abnormal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textColor="#fff57301"
+                    android:textSize="@dimen/chart_size6" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_before_eat_no_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="30dp"
+                android:paddingLeft="20dp"
+                android:text="@string/before_eat"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <!--  -->
+
+            <LinearLayout
+                android:id="@+id/rl_statistical"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/tv_before_eat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:paddingLeft="5dp"
+                    android:text="@string/before_eat"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/chart1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <com.medzone.cloud.comp.widget.MyListView
+                    android:id="@+id/lv_legend"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:gravity="center"
+                    android:listSelector="@android:color/transparent" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/divider_bottom" />
+
+            <TextView
+                android:id="@+id/tv_after_eat_no_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingTop="30dp"
+                android:paddingBottom="30dp"
+                android:paddingLeft="20dp"
+                android:text="@string/before_eat"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/rl_statistical_extra"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:gravity="center"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/tv_after_eat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:paddingLeft="5dp"
+                    android:text="@string/after_eat"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/chart1_extra"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
+
+                <com.medzone.cloud.comp.widget.MyListView
+                    android:id="@+id/lv_legend_extra"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:gravity="center"
+                    android:listSelector="@android:color/transparent" >
+                </com.medzone.cloud.comp.widget.MyListView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_extreme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

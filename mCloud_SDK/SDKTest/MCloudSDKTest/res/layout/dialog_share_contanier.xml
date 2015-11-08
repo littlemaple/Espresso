@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_layout_oval"
+        android:minHeight="@dimen/global_dialog_height"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/global_dialog_margin_horizal"
+        android:paddingRight="@dimen/global_dialog_margin_horizal" >
+
+        <ImageView
+            android:id="@+id/iv_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/global_dialog_margin_vertical"
+            android:contentDescription="@string/todo"
+            android:gravity="center"
+            android:src="@drawable/testresultsview_ic_done" />
+
+        <TextView
+            android:id="@+id/tv_declare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="@dimen/global_dialog_margin_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/mail_font_hint_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="#20000000" />
+
+        <TextView
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_press_alpha_white_effect"
+            android:gravity="center"
+            android:paddingBottom="@dimen/global_dialog_margin_vertical"
+            android:paddingTop="@dimen/global_dialog_margin_vertical"
+            android:text="@string/public_submit"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/global_dialog_font_content_size" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rl_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </RelativeLayout>
+
+    <com.medzone.cloud.comp.widget.CleanableEditText
+        android:id="@+id/et_leave_message"
+        android:layout_width="@dimen/item_share_comment_width"
+        android:layout_height="@dimen/item_share_comment_height"
+        android:layout_marginBottom="@dimen/share_month_or_recent_content_marginbottom"
+        android:layout_marginLeft="@dimen/share_single_content_marginhorizontal"
+        android:layout_marginRight="@dimen/share_single_content_marginhorizontal"
+        android:layout_marginTop="@dimen/share_month_or_recent_content_marginbottom"
+        android:background="@drawable/item_share_input_bg"
+        android:hint="@string/hint_saysomethings"
+        android:maxLength="@integer/limit_chat_content"
+        android:paddingLeft="@dimen/item_share_comment_content_paddingleft"
+        android:textSize="@dimen/font_normal_item"
+        app:maxbytes="@integer/limit_chat_content" >
+
+        <requestFocus />
+    </com.medzone.cloud.comp.widget.CleanableEditText>
+
+</LinearLayout>

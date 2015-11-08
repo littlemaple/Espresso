@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/home_monthly_report_item_height"
+        android:layout_marginTop="@dimen/home_result_item_spacing"
+        android:layout_marginLeft="@dimen/home_result_item_spacing"
+        android:layout_marginRight="@dimen/home_result_item_spacing"
+        android:background="@drawable/item_bg_blood"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_result_item_top_height"
+            android:layout_margin="@dimen/home_result_item_top_margin_horizal" >
+
+            <TextView
+                android:id="@+id/tv_measure_type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="@string/todo"
+                android:textColor="@color/font_measuretype_atrovirens"
+                android:textSize="@dimen/home_font_size_mid" />
+
+            <TextView
+                android:id="@+id/tv_measure_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="@string/todo"
+                android:textColor="@color/home_measuretime_color"
+                android:textSize="@dimen/home_font_size_small" />
+        </RelativeLayout>
+
+         <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/divider_bottom" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/home_result_item_bottom_margin_horizal"
+            android:layout_marginRight="@dimen/home_result_item_bottom_margin_horizal"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginLeft="10dp" >
+
+                <ImageView
+                    android:id="@+id/iv_result_icon"
+                    android:layout_width="@dimen/home_result_icon_size"
+                    android:layout_height="@dimen/home_result_icon_size"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/group_chat_testresult_oxyl" />
+
+                <TextView
+                    android:id="@+id/tv_duration"
+                    android:layout_width="@dimen/home_result_icon_size"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_result_icon"
+                    android:layout_centerHorizontal="true"
+                    android:alpha="@dimen/eight_tenth"
+                    android:singleLine="true"
+                    android:text="@string/blood_oxygen_long_duration"
+                    android:textColor="@color/home_unit_cn_color"
+                    android:textSize="@dimen/home_font_size_small" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal" android:baselineAligned="false">
+
+                <LinearLayout
+                    android:id="@+id/ll_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tv_unit_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dip"
+                        android:layout_weight="1"
+                        android:alpha="@dimen/eight_tenth"
+                        android:text="平均血氧饱和度"
+                        android:textColor="@color/home_unit_cn_color"
+                        android:textSize="@dimen/home_font_size_small" />
+
+                    <TextView
+                        android:id="@+id/tv_value_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dip"
+                        android:layout_marginBottom="@dimen/home_result_font_spacing_vertical"
+                        android:layout_marginTop="@dimen/home_result_font_spacing_vertical"
+                        android:layout_weight="2"
+                        android:text="@string/todo"
+                        android:textColor="@color/home_measuredata_color"
+                        android:textSize="@dimen/font_measure_result_value" />
+
+                    <TextView
+                        android:id="@+id/tv_unit_en_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dip"
+                        android:layout_weight="1"
+                        android:text="@string/todo"
+                        android:textColor="@color/home_unit_en_color"
+                        android:textSize="@dimen/home_font_size_small" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/tv_unit_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="@dimen/eight_tenth"
+                        android:text="平均心率"
+                        android:textColor="@color/home_unit_cn_color"
+                        android:textSize="@dimen/home_font_size_small" />
+
+                    <TextView
+                        android:id="@+id/tv_value_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dip"
+                        android:layout_marginBottom="@dimen/home_result_font_spacing_vertical"
+                        android:layout_marginTop="@dimen/home_result_font_spacing_vertical"
+                        android:layout_weight="2"
+                        android:text="@string/todo"
+                        android:textColor="@color/home_measuredata_color"
+                        android:textSize="@dimen/home_font_size_large" />
+
+                    <TextView
+                        android:id="@+id/tv_unit_en_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dip"
+                        android:layout_weight="1"
+                        android:text="@string/todo"
+                        android:textColor="@color/home_unit_en_color"
+                        android:textSize="@dimen/home_font_size_small" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/home_monthly_report_item_height"
+        android:layout_marginTop="@dimen/home_result_item_spacing"
+        android:layout_marginLeft="@dimen/home_result_item_spacing"
+        android:layout_marginRight="@dimen/home_result_item_spacing"
+        android:background="@drawable/item_bg_blood"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_result_item_top_height"
+            android:layout_margin="@dimen/home_result_item_top_margin_horizal" >
+
+            <TextView
+                android:id="@+id/tv_measure_type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="@string/fetal_heart"
+                android:textColor="@color/font_measuretype_atrovirens"
+                android:textSize="@dimen/home_font_size_mid" />
+
+            <TextView
+                android:id="@+id/tv_movement_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_measure_type"
+                android:gravity="center_vertical"
+                android:text="@string/fetal_moven_record"
+                android:textColor="@color/font_measuretype_atrovirens"
+                android:textSize="@dimen/home_font_size_small"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_measure_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:text="2015/01/08 8:36"
+                android:textColor="@color/home_measuretime_color"
+                android:textSize="@dimen/home_font_size_small" />
+        </RelativeLayout>
+
+         <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/divider_bottom" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/home_result_item_bottom_margin_horizal"
+            android:layout_marginRight="@dimen/home_result_item_bottom_margin_horizal"
+            android:baselineAligned="false"
+            android:gravity="center_vertical" >
+
+            <ImageView
+                android:id="@+id/iv_result_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/todo"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_launcher" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/iv_result_icon"
+                android:gravity="center|left" >
+
+                <TextView
+                    android:id="@+id/tv_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_alignBaseline="@id/tv_value"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignTop="@id/tv_value"
+                    android:gravity="center"
+                    android:text="平均胎心"
+                    android:textColor="@color/home_unit_cn_color"
+                    android:textSize="@dimen/home_font_size_small" />
+
+                <TextView
+                    android:id="@+id/tv_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_toRightOf="@id/tv_hint"
+                    android:text="125"
+                    android:textColor="@color/home_measuredata_color"
+                    android:textSize="@dimen/home_font_size_large"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/tv_value"
+                    android:layout_alignTop="@id/tv_value"
+                    android:layout_toRightOf="@+id/tv_value"
+                    android:gravity="center"
+                    android:text="@string/fetal_heart_continue_bpm"
+                    android:textColor="@color/home_unit_en_color"
+                    android:textSize="@dimen/home_font_size_small" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_continue_time"
+                    android:layout_below="@id/tv_hint"
+                    android:gravity="bottom"
+                    android:text="@string/time_duration"
+                    android:textColor="@color/home_unit_en_color"
+                    android:textSize="@dimen/home_font_size_small" />
+
+                <TextView
+                    android:id="@+id/tv_continue_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_value"
+                    android:layout_marginRight="@dimen/home_result_font_spacing_horizal"
+                    android:layout_marginTop="7dp"
+                    android:layout_toRightOf="@id/tv_time"
+                    android:text="@string/fetal_heart_continue_time"
+                    android:textColor="@color/home_unit_en_color"
+                    android:textSize="@dimen/home_font_size_small" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

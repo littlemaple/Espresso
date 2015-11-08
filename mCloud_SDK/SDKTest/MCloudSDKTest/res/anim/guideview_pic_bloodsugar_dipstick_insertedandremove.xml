@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false" >
+
+    <item
+        android:drawable="@drawable/guideview_pic_bloodsugar_dipstick_remove"
+        android:duration="800"/>
+    
+        <item
+        android:drawable="@drawable/guideview_pic_bloodsugar_dipstick_inserted"
+        android:duration="800"/>
+
+</animation-list>

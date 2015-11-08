@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDEDED"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/tv_profile_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:gravity="bottom|left"
+        android:textSize="17sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_button_height"
+        android:layout_below="@id/tv_profile_key"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/group_btn_white_normal"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/et_number"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/item_button_height"
+            android:layout_centerVertical="true"
+            android:gravity="center|left"
+            android:paddingLeft="15dp"
+            android:text="20"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/qa_img"
+            android:textColor="#60000000" />
+
+        <ImageView
+            android:id="@+id/qa_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/group_ic_right" />
+    </RelativeLayout>
+
+</RelativeLayout>

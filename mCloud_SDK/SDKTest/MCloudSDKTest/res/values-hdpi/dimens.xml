@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="setting_about_margin_horizal">32dp</dimen>
+    <dimen name="item_share_comment_bg_stroken">1.5dp</dimen>
+    <dimen name="item_share_comment_width">272dp</dimen>
+    <dimen name="item_share_comment_height">27dp</dimen>
+    <dimen name="item_share_comment_content_paddingleft">15dp</dimen>
+    <dimen name="item_empryview_margintop">4dp</dimen>
+    <!-- 720p -->
+    <!-- 公共页面 -->
+    <dimen name="divider_height">0.5dp</dimen>
+    <dimen name="item_button_height">48dp</dimen>
+    <dimen name="item_margin_button_height">60dp</dimen>
+    <dimen name="item_input_height">56dp</dimen>
+    <dimen name="item_margin_horizontal">20dp</dimen>
+    <dimen name="circlepage_margin">10dp</dimen>
+    <dimen name="home_avatar_stroken_width">3dp</dimen>
+    <dimen name="tip_dialog_width">248dp</dimen>
+    <dimen name="tip_dialog_height">100dp</dimen>
+    <dimen name="tip_dialog_margin_horizal">25dp</dimen>
+    <dimen name="tip_dialog_margin_vertical">25dp</dimen>
+    <dimen name="error_dialog_margin_horizal">56dp</dimen>
+    <dimen name="actionbar_margin_horizontal">8dp</dimen>
+    <dimen name="check_code_padding_horizal">20dp</dimen>
+    <dimen name="history_child_margin_left">18dp</dimen>
+    <!-- global dialog -->
+    <dimen name="global_dialog_height">100dp</dimen>
+    <dimen name="global_dialog_margin_horizal">20dp</dimen>
+    <dimen name="global_dialog_margin_vertical">15dp</dimen>
+    <dimen name="global_dialog_font_title_size">18sp</dimen>
+    <dimen name="global_dialog_font_content_size">16sp</dimen>
+    
+
+    <!-- 日期对话框 -->
+    <dimen name="indicator_measure_paddingtop">3dp</dimen>
+
+    <!-- mail send page -->
+    <dimen name="mail_margin_horizal">24dp</dimen>
+    <dimen name="mail_margin_vertical">20dp</dimen>
+    <dimen name="mail_edit_width">240dp</dimen>
+    <dimen name="mail_font_hint_size">15sp</dimen>
+
+    <!-- 首页（我的心云） -->
+    <dimen name="home_monthly_repory_layout_height">54dp</dimen>
+    <dimen name="home_placeholder_title_margintop">120dp</dimen>
+    <dimen name="home_placeholder_ad1_margintop">40dp</dimen>
+    <dimen name="home_placeholder_ad2_margintop">20dp</dimen>
+    <dimen name="home_placeholder_logo_margintop">56dp</dimen>
+    <dimen name="home_monthly_report_layout_marginbottom">16dp</dimen>
+    <dimen name="home_monthly_report_title">16sp</dimen>
+    <dimen name="home_monthly_report_margin_left">24dp</dimen>
+    <dimen name="home_monthly_report_margin_right">16dp</dimen>
+    <dimen name="home_monthly_report_divider_horizontal">10dp</dimen>
+    <dimen name="home_monthly_report_divider_margin_vertical">10dp</dimen>
+    <dimen name="home_monthly_report_item_marginright">12dp</dimen>
+    <dimen name="home_monthly_report_item_height">168dp</dimen>
+    <dimen name="home_name_marginleft">28dp</dimen>
+    <dimen name="home_history_record_margin_horizontal">20dp</dimen>
+    <dimen name="home_result_item_spacing">13dp</dimen>
+    <dimen name="home_margin_left">15dp</dimen>
+
+    <!-- UI给的标注导致图片显示非常异常 -->
+    <dimen name="home_result_item_top_height">25dp</dimen>
+    <dimen name="home_result_icon_size">100dp</dimen>
+    <dimen name="home_result_margin_text_left">20dp</dimen>
+    <dimen name="home_result_item_top_margin_horizal">8dp</dimen>
+    <dimen name="home_result_item_bottom_margin_horizal">10dp</dimen>
+    <dimen name="home_result_font_spacing_vertical">8dp</dimen>
+    <dimen name="home_result_font_spacing_horizal">4dp</dimen>
+
+    <!-- 忘记密码 -->
+    <dimen name="forget_password_account_left">24dp</dimen>
+    <dimen name="forget_password_subbtn_height">48dp</dimen>
+
+    <!-- 登陆页面 -->
+    <dimen name="login_logo_top_up">40dp</dimen>
+    <dimen name="login_logo_top_down">30dp</dimen>
+    <dimen name="login_logo_bottom_up">58dp</dimen>
+    <dimen name="login_logo_bottom_down">10dp</dimen>
+    <dimen name="login_input_margin_left">24dp</dimen>
+    <dimen name="login_input_margin_right">24dp</dimen>
+    <dimen name="login_input_icon_margin_top">14dp</dimen>
+    <dimen name="login_input_icon_margin_right">16dp</dimen>
+    <dimen name="login_input_icon_margin_bottom">14dp</dimen>
+    <dimen name="login_input_icon_margin_left">16dp</dimen>
+    <dimen name="login_input_password_top">20dp</dimen>
+    <dimen name="login_input_height">48dp</dimen>
+
+    <!-- 重置密码 -->
+    <dimen name="reset_password_btn_top">44dp</dimen>
+    <dimen name="reset_password_btn_width">336dp</dimen>
+    <dimen name="reset_password_btn_height">48dp</dimen>
+    <dimen name="reset_password_btn_margin_left">12dp</dimen>
+    <dimen name="reset_password_btn_margin_right">12dp</dimen>
+
+    <!-- 注册-手机号码填写 -->
+    <dimen name="register_margin_top">28dp</dimen>
+    <dimen name="rigister_icon_padding">12dp</dimen>
+    <dimen name="rigister_icon_padding_right">24dp</dimen>
+    <dimen name="register_icon_progress_margin_top">16dp</dimen>
+    <dimen name="register_item_margin_right">12dp</dimen>
+    <dimen name="register_item_margin_left">12dp</dimen>
+    <dimen name="register_item_margin_mid">8dp</dimen>
+    <dimen name="register_item_margin_bottom">44dp</dimen>
+
+    <!-- 注册-个人信息填写 -->
+    <dimen name="regisiter_person_margin_left">24dp</dimen>
+    <dimen name="regisiter_person_margin_right">24dp</dimen>
+    <dimen name="regisiter_person_margin_top">18dp</dimen>
+    <dimen name="regisiter_person_margin_bottom">18dp</dimen>
+    <dimen name="regisiter_person_confirm_padding">12dp</dimen>
+    <dimen name="regisiter_person_confirm_margin_bottom">44dp</dimen>
+
+    <!-- 注册-设备管理页面 -->
+    <dimen name="register_device_height">204dp</dimen>
+    <dimen name="rigister_device_padding_left">24dp</dimen>
+    <dimen name="register_device_margin_right">12dp</dimen>
+    <dimen name="register_device_margin_left">12dp</dimen>
+    <dimen name="register_device_confirm_margin_top">16dp</dimen>
+    <dimen name="register_device_layout_padding_left">25dp</dimen>
+    <dimen name="register_device_layout_margin_right">25dp</dimen>
+    <dimen name="register_device_layout_padding_bottom">27dp</dimen>
+
+    <!-- 设置 -->
+    <dimen name="setting_margin_horizal">20dp</dimen>
+    <dimen name="setting_top_item_height">96dp</dimen>
+    <dimen name="setting_top_item_margin_top">20dp</dimen>
+    <dimen name="setting_top_margin_bottom">20dp</dimen>
+    <dimen name="setting_avator_height">64dp</dimen>
+    <dimen name="setting_avator_width">64dp</dimen>
+    <dimen name="setting_avator_margin_left">24dp</dimen>
+    <dimen name="setting_avator_margin_right">16dp</dimen>
+    <dimen name="setting_avator_margin_bottom">20dp</dimen>
+    <dimen name="setting_arrow_width">24dp</dimen>
+    <dimen name="setting_arrow_height">24dp</dimen>
+    <dimen name="setting_arrow_margin_right">12dp</dimen>
+    <dimen name="setting_item_padding_left">24dp</dimen>
+    <dimen name="setting_item_padding_right">12dp</dimen>
+    <dimen name="setting_drawable_padding">16dp</dimen>
+    <dimen name="setting_about_margin_top">32dp</dimen>
+    <dimen name="setting_about_margin_bottom">48dp</dimen>
+    <dimen name="setting_about_margin_right">25dp</dimen>
+    <dimen name="setting_about_margin_left">25dp</dimen>
+    <dimen name="setting_about_agreement_margin_top">16dp</dimen>
+    <dimen name="setting_about_provider_margin_bottom">20dp</dimen>
+    <dimen name="setting_about_version_top">5dp</dimen>
+    <dimen name="setting_edit_pregnant_margin_top">28dp</dimen>
+    <dimen name="setting_edit_pregnant_margin_left">20dp</dimen>
+    <dimen name="setting_edit_nickname_margin_left">20dp</dimen>
+    <dimen name="setting_edit_nickname_margin_right">20dp</dimen>
+    <dimen name="setting_edit_nickname_margin_top">32dp</dimen>
+    <dimen name="setting_privacy_margin_top">24dp</dimen>
+    <dimen name="setting_privacy_margin_left">20dp</dimen>
+    <dimen name="setting_privacy_margin_right">12dp</dimen>
+    <dimen name="setting_edit_nickname_margin_bottom">8dp</dimen>
+    <dimen name="setting_edit_nickname_padding_left">20dp</dimen>
+    <dimen name="setting_edit_personinfo_top_item_height">84dp</dimen>
+    <dimen name="setting_edit_personinfo_avatar_height">68dp</dimen>
+    <dimen name="setting_edit_personinfo_avatar_width">68dp</dimen>
+    <dimen name="setting_tied_info_margin_item_left">20dp</dimen>
+    <dimen name="setting_tied_info_margin_item_right">12dp</dimen>
+    <dimen name="setting_tied_info_margin_left">24dp</dimen>
+    <dimen name="setting_tied_info_margin_right">16dp</dimen>
+    <dimen name="setting_tied_info_item_width">240dp</dimen>
+    <dimen name="setting_tied_info_margin_bottom">16dp</dimen>
+    <dimen name="setting_tied_info_margin_top">16dp</dimen>
+    <dimen name="seting_tied_info_address_title_margin_top">45dp</dimen>
+    <dimen name="seting_tied_info_address_title_margin_horizal">20dp</dimen>
+    <dimen name="setting_btn_height">48dp</dimen>
+    <dimen name="setting_tied_info_text_margin_top">8dp</dimen>
+    <dimen name="setting_permission_hint_height">90dp</dimen>
+    <dimen name="setting_permission_hint_margin">15dp</dimen>
+    <dimen name="setting_personal_exit_margin_left">12dp</dimen>
+    <dimen name="setting_personal_exit_margin_right">12dp</dimen>
+    <dimen name="setting_personal_exit_margin_top">8dp</dimen>
+    <dimen name="setting_personal_exit_margin_bottom">8dp</dimen>
+    <dimen name="setting_personal_dialog_padding_left">40dp</dimen>
+    <dimen name="setting_personal_dialog_drawable_padding">15dp</dimen>
+    <dimen name="setting_tied_info_address_margin_top">25dp</dimen>
+    <dimen name="setting_tied_info_address_detail_margin_top">18dp</dimen>
+    <dimen name="setting_tied_info_address_large_item_height">112dp</dimen>
+
+    <!-- 测量-公共部分 -->
+    <dimen name="device_avatar_size">96dp</dimen>
+    <dimen name="dialog_padding">10dp</dimen>
+    <dimen name="input_padding">10dp</dimen>
+    <dimen name="history_trend_list_padding">12dp</dimen>
+    <dimen name="history_trend_month_margin">10dp</dimen>
+    <dimen name="history_trend_month_margin_1">3dp</dimen>
+    <dimen name="suggest_margin">45dp</dimen>
+    <!-- 血压测量 -->
+    <dimen name="pressure_connection_animation_high">212dp</dimen>
+    <dimen name="pressure_connection_strat_high">43dp</dimen>
+    <dimen name="pressure_connection_circle_margin_top">48.3dp</dimen>
+    <dimen name="pressure_connection_circle_margin_left">44dp</dimen>
+    <dimen name="pressure_connection_circle_width">34dp</dimen>
+    <dimen name="pressure_connection_hand_width">170dp</dimen>
+    <dimen name="pressure_connection_hand_height">200dp</dimen>
+    <dimen name="pressure_connection_strat_width">120dp</dimen>
+    <dimen name="pressure_connection_margin_top">70dp</dimen>
+    <dimen name="pressure_connection_margin_right">84dp</dimen>
+    <dimen name="pressure_connection_margin_left">84dp</dimen>
+    <dimen name="pressure_connection_text_margin_bottom">20dp</dimen>
+    <dimen name="pressure_connection_text_margin_top">20dp</dimen>
+    <dimen name="pressure_connection_success_margin_top">76dp</dimen>
+    <dimen name="pressure_connection_success_text_margin_top">36dp</dimen>
+    <dimen name="pressure_connection_success_text_margin_bottom">12dp</dimen>
+    <dimen name="pressure_connection_anmi_height">66dp</dimen>
+    <dimen name="pressure_measure_view_width">36dp</dimen>
+    <dimen name="pressure_measure_margin_top">36dp</dimen>
+    <dimen name="pressure_measure_margin_interval">20dp</dimen>
+    <dimen name="pressure_measure_change_title_interval">12dp</dimen>
+    <dimen name="pressure_measure_view_margin_top">30dp</dimen>
+    <dimen name="pressure_measure_view_margin_bottom">40dp</dimen>
+    <dimen name="pressure_measure_heart_margin_right">96dp</dimen>
+    <dimen name="pressure_measure_heart_margin_top">65dp</dimen>
+    <dimen name="measure_result_bottom_high">56dp</dimen>
+    <dimen name="measure_result_margin_top">36dp</dimen>
+    <dimen name="measure_result_note_high">48dp</dimen>
+    <dimen name="measure_result_value_high">120dp</dimen>
+    <dimen name="measure_result_value_margin">10dp</dimen>
+    <dimen name="measure_result_value_margin_right">12dp</dimen>
+    <dimen name="measure_result_bottom_margin_right">27dp</dimen>
+    <dimen name="pressure_input_high">48dp</dimen>
+    <dimen name="pressure_input_margin_top">28dp</dimen>
+    <dimen name="pressure_input_margin_bottom">20dp</dimen>
+    <dimen name="pressure_input_margin_left">24dp</dimen>
+    <dimen name="pressure_input_margin_right">24dp</dimen>
+    <dimen name="measure_result_details_time_margin_top">8dp</dimen>
+    <dimen name="measure_result_details_time_margin_left">16dp</dimen>
+    <dimen name="measure_result_details_time_margin_right">8dp</dimen>
+    <dimen name="measure_result_details_time_margin_bottom">8dp</dimen>
+    <dimen name="measure_result_details_history_trend_high">56dp</dimen>
+    <dimen name="measure_result_details_history_trend_itme_high">36dp</dimen>
+    <dimen name="measure_result_details_suggest_title_high">52dp</dimen>
+    <dimen name="pressure_history_trend_high">70dp</dimen>
+    <dimen name="pressure_history_trend_child_high">69dp</dimen>
+    <dimen name="pressure_history_list_margin">10dp</dimen>
+    <dimen name="pressure_history_list_margin_left">20dp</dimen>
+    <dimen name="pressure_history_list_group_layout_width">60dp</dimen>
+    <dimen name="pressure_history_trend_month_margin_left">14dp</dimen>
+    <dimen name="pressure_history_trend_month_margin_top">32dp</dimen>
+    <dimen name="pressure_history_trend_month_result_margin_top">16dp</dimen>
+    <dimen name="pressure_history_trend_month_time_margin">10dp</dimen>
+    <dimen name="pressure_history_trend_month_value_margin">10dp</dimen>
+    <dimen name="personnel_being_measured_list_margin">10dp</dimen>
+    <dimen name="pressure_history_trend_margin">24dp</dimen>
+    <dimen name="measure_result_details_value_margin_bottom">15dp</dimen>
+
+    <!-- 血氧测量 -->
+    <dimen name="oxygen_connect_margin_top">70dp</dimen>
+    <dimen name="oxygen_connect_equipment_width">360dp</dimen>
+    <dimen name="oxygen_connect_equipment_height">202dp</dimen>
+    <dimen name="oxygen_connect_round_margin_left">93dp</dimen>
+    <dimen name="oxygen_connect_round_margin_top">26dp</dimen>
+    <dimen name="oxygen_connect_round_width">56dp</dimen>
+    <dimen name="oxygen_connect_success_long_margin">10dp</dimen>
+    <dimen name="oxygen_measure_value_margin_top">20dp</dimen>
+    <dimen name="oxygen_measure_value_margin_bottom">8dp</dimen>
+    <dimen name="oxygen_measure_value_view_high">104dp</dimen>
+    <dimen name="oxygen_history_list_child_item_margin_left">5dp</dimen>
+    <dimen name="oxygen_history_list_child_item_margin_right">10dp</dimen>
+    <dimen name="oxygen_history_list_item_margin">5dp</dimen>
+    <dimen name="history_trend_image_width">80dp</dimen>
+    <dimen name="history_trend_image_heigth">80dp</dimen>
+    <dimen name="oxygen_history_list_padding">5dp</dimen>
+    <dimen name="oxygen_history_list_margin_left">5dp</dimen>
+    <dimen name="oxygen_history_trend_margin">10dp</dimen>
+    <dimen name="oxygen_history_trend_month_chart_heigh">262dp</dimen>
+    <dimen name="oxygen_history_trend_month_view_heigh">36dp</dimen>
+    <dimen name="oxygen_history_trend_month_view_margin_top">24dp</dimen>
+    <dimen name="oxygen_history_trend_month_text_margin_left">8dp</dimen>
+    <dimen name="oxygen_history_trend_month_ll_margin_left">10dp</dimen>
+    <dimen name="oxygen_history_trend_margin_left">2dp</dimen>
+    <dimen name="oxygen_result_details_view_heigh">60dp</dimen>
+    <dimen name="oxygen_result_details_view_width">1.0px</dimen>
+    <dimen name="oxygen_result_details_readme_margin">1dp</dimen>
+    <dimen name="oxygen_result_details_readme_padding">10dp</dimen>
+
+    <!-- 耳温测量 -->
+    <dimen name="et_connect_margin_top">30dp</dimen>
+    <dimen name="et_connect_hander_margin_left">116dp</dimen>
+    <dimen name="et_connect_round_margin_left">142dp</dimen>
+    <dimen name="et_connect_round_margin_top">26.5dp</dimen>
+    <dimen name="et_connect_flag_text_margin_top">10dp</dimen>
+    <dimen name="et_connect_flag_text_margin_botom">10dp</dimen>
+    <dimen name="et_connect_success_animation_high">240dp</dimen>
+    <dimen name="et_measure_margin_top">32dp</dimen>
+    <dimen name="et_measure_margin_bottom">16dp</dimen>
+    <dimen name="et_measure_result_margin_top">12dp</dimen>
+    <dimen name="et_measure_result_margin_left">8dp</dimen>
+    <dimen name="et_measure_result_util_high">25dp</dimen>
+    <dimen name="et_history_trend_margin_right">5dp</dimen>
+    <dimen name="et_history_trend_margin_left">24dp</dimen>
+    <dimen name="framelayout_insert_in_top">40dp</dimen>
+
+    <!-- 血糖测量 -->
+    <dimen name="bloodsugar_history_trend_month_margin_top">10dp</dimen>
+    <dimen name="bs_connect_margin_top">70dp</dimen>
+    <dimen name="bs_connect_margin_bottom_tv_first">10dp</dimen>
+    <dimen name="bs_connect_margin_top_tv_second">10dp</dimen>
+
+    <!-- 服务 -->
+    <dimen name="service_grideview_vertical_spacing">24dp</dimen>
+
+    <!-- 群组 -->
+    <dimen name="group_error_net_padding_left">30dp</dimen>
+    <dimen name="group_icon_size">44dp</dimen>
+    <dimen name="group_name_paddingleft">10dp</dimen>
+    <dimen name="group_state_icon_marginright">15dp</dimen>
+    <dimen name="group_fragment_item_extra_height">8dp</dimen>
+    <dimen name="group_fragment_item_height_padding">64dp</dimen>
+    <dimen name="group_fragment_item_height">56dp</dimen>
+    <dimen name="group_fragment_mygroup_margin_left">22dp</dimen>
+    <dimen name="group_fragment_mygroup_margin_right">17dp</dimen>
+    <dimen name="group_fragment_mygroup_member_margin_left">16dp</dimen>
+    <dimen name="group_fragment_mygroup_member_margin_right">12dp</dimen>
+    <dimen name="group_create_margin_top">28dp</dimen>
+    <dimen name="group_create_success_padding_left">24dp</dimen>
+    <dimen name="group_create_success_margin_top">56dp</dimen>
+    <dimen name="group_create_success_margin_bottom">12dp</dimen>
+    <dimen name="group_create_success_button_margin_bottom">50dp</dimen>
+    <dimen name="group_create_success_button_margin_left">12dp</dimen>
+    <dimen name="group_create_success_button_margin_right">12dp</dimen>
+    <dimen name="group_create_success_button_margin_interval">24dp</dimen>
+    <dimen name="group_create_success_icon_radius">114dp</dimen>
+    <dimen name="group_search_icon_width">35dp</dimen>
+    <dimen name="group_search_icon_height">35dp</dimen>
+    <dimen name="group_search_icon_margin_right">16dp</dimen>
+    <dimen name="group_search_interval">25dp</dimen>
+    <!-- 群组-个人资料 -->
+    <dimen name="group_member_detail_margin_horizal">10dp</dimen>
+    <dimen name="group_member_detail_top_line_right">10dp</dimen>
+    <dimen name="group_member_detail_top_line_left">35dp</dimen>
+    <dimen name="group_member_detail_two_btn_spacing">25dp</dimen>
+    <dimen name="group_member_detail_btn_margin_top">14dp</dimen>
+    <dimen name="group_member_detail_item_input_height_small">53dp</dimen>
+    <dimen name="group_member_detail_item_input_height_large">50dp</dimen>
+    <dimen name="group_member_detail_top_line_height">97dp</dimen>
+    <dimen name="group_member_detail_text_spacing_large">30dp</dimen>
+    <dimen name="group_member_detail_text_spacing_small">15dp</dimen>
+    <dimen name="group_member_layout_height">241.5dp</dimen>
+    <dimen name="group_member_icon_margin">8dp</dimen>
+    <dimen name="group_member_icon_width">68dp</dimen>
+    <dimen name="group_member_icon_height">68dp</dimen>
+    <dimen name="group_member_margin_horizal">20dp</dimen>
+    <dimen name="group_member_search_margin_vertical">8dp</dimen>
+    <dimen name="group_member_text_height">40dp</dimen>
+    <dimen name="group_member_text_margin_vertical">12dp</dimen>
+    <dimen name="group_member_item_height">60dp</dimen>
+    <dimen name="font_contact_nick_size">16sp</dimen>
+    <!-- 群组-邀请页面 -->
+    <dimen name="group_invite_dialog_avatar_size">66dp</dimen>
+    <dimen name="group_invite_dialog_height">140dp</dimen>
+    <dimen name="group_invite_dialog_width">305dp</dimen>
+    <dimen name="group_invite_dialog_avatar_marginleft">22dp</dimen>
+    <dimen name="group_invite_dialog_avatar_marginleft_2">40dp</dimen>
+    <dimen name="group_invite_dialog_padding_horizontal">20dp</dimen>
+
+    <!-- 群组-分享 -->
+    <dimen name="share_single_content_marginhorizontal">20dp</dimen>
+    <dimen name="share_single_avatar_size">60dp</dimen>
+    <dimen name="share_month_or_recent_content_marginleft">22dp</dimen>
+    <dimen name="share_month_or_recent_content_marginbottom">8dp</dimen>
+    <dimen name="group_share_dialog_minheight">49dp</dimen>
+    <dimen name="group_share_dialog_statistics_text_marginleft">10dp</dimen>
+    <dimen name="group_share_single_dialog_statistics_text_marginleft">3dp</dimen>
+
+    <!-- 群组-邀请进度处理页面 -->
+    <dimen name="group_dispose_icon_layout_width">75dp</dimen>
+    <dimen name="group_dispose_icon_min_size">25dp</dimen>
+    <dimen name="group_dispose_button_width">55dp</dimen>
+    <dimen name="group_dispose_button_height">28dp</dimen>
+    <dimen name="group_dispose_icon_margin_left">20dp</dimen>
+    <dimen name="group_dispose_icon_margin_right">12dp</dimen>
+    <dimen name="group_dispose_icon_margin_vertical">4dp</dimen>
+    <dimen name="group_dispose_accept_margin_top">20dp</dimen>
+    <dimen name="group_dispose_accept_margin_bottom">12dp</dimen>
+
+    <!-- 群组-聊天页面 -->
+    <dimen name="group_chat_height">52dp</dimen>
+    <dimen name="group_chat_input_height">28dp</dimen>
+    <dimen name="group_chat_input_padding_vertical">15dp</dimen>
+    <dimen name="group_chat_input_padding_left">10dp</dimen>
+    <dimen name="group_chat_time_margin_top">16dp</dimen>
+    <dimen name="group_chat_time_margin_bottom">8dp</dimen>
+    <dimen name="group_chat_record_title_height">28dp</dimen>
+    <dimen name="group_chat_item_minheight">49dp</dimen>
+    <dimen name="group_chat_item_share_width">270dp</dimen>
+    <dimen name="group_chat_item_record_icon_size">60dp</dimen>
+    <dimen name="group_chat_item_record_content_margin">2dp</dimen>
+    <!-- 群资料设置 -->
+    <dimen name="group_datum__margin_left">15dp</dimen>
+    <dimen name="group_datum__margin_right">15dp</dimen>
+
+    <!-- 服务-闹钟 -->
+    <dimen name="service_clock_inner_item_margin_vertical">1dp</dimen>
+    <dimen name="service_clock_inner_item_width">180dp</dimen>
+    <dimen name="service_clock_item_margin_horizal">20dp</dimen>
+    <dimen name="service_clock_item_margin_right">9dp</dimen>
+    <dimen name="service_clock_time_pick_padding">10dp</dimen>
+    <dimen name="service_clock_edit_margin_left">20dp</dimen>
+    <dimen name="service_clock_edit_margin_right">12dp</dimen>
+    <dimen name="service_clock_edit_item_margin_top">20dp</dimen>
+    <dimen name="service_clock_change_tag_margin_top">30dp</dimen>
+    <dimen name="service_clock_repeatition_margin_horizal">20dp</dimen>
+
+    <!-- 所有字体属性 -->
+    <dimen name="font_pressure_history_list_time_hs">15sp</dimen>
+    <dimen name="font_group_chat_measure_time_size">10sp</dimen>
+    <dimen name="font_group_chat_measure_unit_size">9sp</dimen>
+    <dimen name="font_group_chat_name_size">10sp</dimen>
+    <dimen name="font_measure_result_util">11sp</dimen>
+    <dimen name="font_audio_measure_result_util_o">11sp</dimen>
+    <dimen name="group_dispose_description_textsize">11sp</dimen>
+    <dimen name="font_small_item">12sp</dimen>
+    <dimen name="home_monthly_report_item_textsize">12sp</dimen>
+    <dimen name="group_description_textsize">12sp</dimen>
+    <dimen name="font_caremember_events_size">12sp</dimen>
+    <dimen name="font_group_chat_item_measuretype_size">12sp</dimen>
+    <dimen name="font_measure_result_util_text">14sp</dimen>
+    <dimen name="font_pressure_history_list_small">15sp</dimen>
+    <dimen name="font_pressure_history_list_small_1">12sp</dimen>
+    <dimen name="group_error_net_font_size">14sp</dimen>
+    <dimen name="font_view_person_datum_name">15sp</dimen>
+    <dimen name="home_font_size_small">11sp</dimen>
+    <dimen name="home_font_size_mid">15sp</dimen>
+    <dimen name="font_clock_description_size">15sp</dimen>
+    <dimen name="font_oxygen_measure_util">16sp</dimen>
+    <dimen name="group_dispose_info_textsize">16sp</dimen>
+    <dimen name="font_pressure_measure_change_unit">16sp</dimen>
+    <dimen name="font_login_item">16sp</dimen>
+    <dimen name="font_measure_result_details_history_trend_text">16sp</dimen>
+    <dimen name="home_placeholder_ad_fontsize">16sp</dimen>
+    <dimen name="group_child_item_textsize">16sp</dimen>
+    <dimen name="group_search_description_textsize">17sp</dimen>
+    <dimen name="login_btn_font_size">18sp</dimen>
+    <dimen name="font_group_detail_age_size">18sp</dimen>
+    <dimen name="font_view_person_datum_remark">18sp</dimen>
+    <dimen name="font_normal_item">16sp</dimen>
+    <dimen name="font_setting_name_item">18sp</dimen>
+    <dimen name="font_pressure_measure_change_title">18sp</dimen>
+    <dimen name="font_oxygen_measure_text">18sp</dimen>
+    <dimen name="font_audio_measure_text">18sp</dimen>
+    <dimen name="tip_dialog_font_size">18sp</dimen>
+    <dimen name="group_invite_dialog_textsize">18sp</dimen>
+    <dimen name="font_action_title_size">18sp</dimen>
+    <dimen name="font_measure_no_data">16sp</dimen>
+    <dimen name="home_name_textsize">20sp</dimen>
+    <dimen name="font_confirm_item">18sp</dimen>
+    <dimen name="font_connection_start_text">20sp</dimen>
+    <dimen name="font_audio_measure_result_util_C">20sp</dimen>
+    <dimen name="group_create_success_title_textsize">20sp</dimen>
+    <dimen name="font_group_name_size">20sp</dimen>
+    <dimen name="home_placeholder_title_fontsize">23sp</dimen>
+    <dimen name="font_pressure_history_list_big">18sp</dimen>
+    <dimen name="font_group_chat_measure_value_size">24sp</dimen>
+    <dimen name="font_group_chat_unit_size">15sp</dimen>
+    <dimen name="home_font_size_large">22sp</dimen>
+    <dimen name="font_pressure_history_list_biggest">22sp</dimen>
+    <dimen name="font_pressure_history_list_fetal_pre">20sp</dimen>
+    <dimen name="font_clock_time_size">28sp</dimen>
+    <dimen name="font_measure_result_value">23sp</dimen>
+    <dimen name="font_oxygen_measure_value">28sp</dimen>
+    <dimen name="font_audio_measure_result_vlaue">50sp</dimen>
+    <dimen name="font_blood_sugar_measure_result_vlaue">20sp</dimen>
+    <dimen name="font_pressure_measure_change_value">55sp</dimen>
+    <dimen name="font_audio_measure_result_util_mmol">15sp</dimen>
+
+    <!-- chart font -->
+    <dimen name="chart_labels_text_size">10sp</dimen>
+    <dimen name="chart_margin_top">20dp</dimen>
+    <dimen name="chart_margin_left">35dp</dimen>
+    <dimen name="chart_margin_right">15dp</dimen>
+    <dimen name="chart_margin_bottom">10dp</dimen>
+    <dimen name="chart_line_width">1.5dp</dimen>
+    <dimen name="chart_month_point_size">2.5dp</dimen>
+    <dimen name="chart_point_size">5dp</dimen>
+    <dimen name="chart_select_point_size">6.8dp</dimen>
+    <dimen name="chart_point_select_buffer">30dp</dimen>
+    <!-- 胎动测量页面 -->
+    <dimen name="iv_fhr_foot_height">60dp</dimen>
+    <dimen name="layout_margin">0dp</dimen>
+    <!-- 胎心测量 -->
+    <dimen name="fhr_pop_width">120dp</dimen>
+    <dimen name="fhr_pop_height">130dp</dimen>
+    <dimen name="fhr_pop_margin_right">30dp</dimen>
+
+    <!-- 联系人标签 -->
+    <dimen name="group_tag_item_height">60dp</dimen>
+    <dimen name="contact_round_avatar_border_width">1dp</dimen>
+    <dimen name="font_style_size15">15sp</dimen>
+    <!-- 胎动图表添加 -->
+    <dimen name="chart_movement_top_space">32dp</dimen>
+    <dimen name="fetal_share_margin">10dp</dimen>
+    <dimen name="subscribe_unread_message_background">27dp</dimen>
+
+    <!-- 首页 -->
+    <dimen name="home_moudle_font_size">14sp</dimen>
+    <dimen name="home_data_size">18sp</dimen>
+    <dimen name="home_unit_size">13sp</dimen>
+    <dimen name="home__size">13sp</dimen>
+
+    <!-- 统计 -->
+    <dimen name="stat_near_title_size">20sp</dimen>
+    <dimen name="stat_near_count_size">30sp</dimen>
+    <dimen name="no_data_marginTop">22dp</dimen>
+    <dimen name="no_data_marginBottom">35dp</dimen>
+    <dimen name="stat_max_value_size">17sp</dimen>
+    <dimen name="stat_max_unit_size">12sp</dimen>
+
+</resources>

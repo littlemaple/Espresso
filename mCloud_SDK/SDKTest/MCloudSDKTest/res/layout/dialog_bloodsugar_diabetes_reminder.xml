@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    
+    android:gravity="center"
+    android:orientation="vertical" 
+    android:background="@drawable/dialog_border">
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        style="@style/RegisterExplainTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="是否有糖尿病史?"
+        android:textColor="@color/tab_dark"
+        android:textSize="23sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_dialog_content"
+        style="@style/RegisterExplainTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="为了保证测量结果的准确性\n请如实选择您的情况"
+        android:textColor="@color/tab_dark"
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ffe9e9e9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tv_yes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:textColor="#ff38d2d3"
+            android:textSize="20sp" 
+            android:text="是，我有" />
+         <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:background="#ffe9e9e9" />
+
+        <TextView
+            android:id="@+id/tv_no"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:textSize="20sp" 
+            android:textColor="#ff38d2d3"
+            android:text="否，我没有" />
+
+    </LinearLayout>
+
+</LinearLayout>

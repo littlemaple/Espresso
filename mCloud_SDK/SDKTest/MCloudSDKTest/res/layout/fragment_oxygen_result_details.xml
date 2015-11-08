@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/item_margin_button_height" >
+
+            <TextView
+                android:id="@+id/tv_measure_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/measure_result_details_time_margin_bottom"
+                android:layout_marginLeft="@dimen/measure_result_value_margin"
+                android:layout_marginRight="@dimen/measure_result_value_margin"
+                android:layout_marginTop="@dimen/measure_result_details_time_margin_top"
+                android:drawableLeft="@drawable/detailsoftheresultsview_ic_time"
+                android:drawablePadding="@dimen/measure_result_details_time_margin_right"
+                android:textColor="#50000000" />
+
+            <ImageView
+                android:id="@+id/oxygen_result_details_flag_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_measure_time"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/measure_result_margin_top"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                android:src="@drawable/group_chat_testresult_normal"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/layout_oxygen_display"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/measure_result_value_high"
+                android:layout_below="@+id/oxygen_result_details_flag_iv"
+                android:layout_margin="@dimen/measure_result_value_margin"
+                android:background="@drawable/item_bg_blood"
+                android:baselineAligned="false"
+                android:orientation="horizontal" >
+
+                <!-- android:gravity="center" -->
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/measure_result_details_value_margin_bottom"
+                    android:layout_marginRight="@dimen/measure_result_value_margin_right"
+                    android:layout_weight="1.0"
+                    android:gravity="center|bottom"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/oxygen_result_details_oxygenTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="105"
+                        android:textColor="@color/font_history_high_priority_value"
+                        android:textSize="@dimen/font_oxygen_measure_value"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="@dimen/two_tenth"
+                        android:text="@string/blood_oxygen_unit"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_measure_result_util" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/blood_oxygen_saturation"
+                        android:textSize="@dimen/font_measure_result_util_text" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="@dimen/oxygen_result_details_view_width"
+                    android:layout_height="@dimen/oxygen_result_details_view_heigh"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/measure_result_value_margin_right"
+                    android:background="@drawable/dottedline" />
+                <!-- android:gravity="center" -->
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/measure_result_details_value_margin_bottom"
+                    android:layout_weight="1.0"
+                    android:gravity="center|bottom"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/oxygen_result_details_rateTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="105"
+                        android:textColor="@color/font_history_low_priority_value"
+                        android:textSize="@dimen/font_measure_result_value"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:alpha="@dimen/two_tenth"
+                        android:text="@string/heart_rate_unit"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/font_measure_result_util" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/heart_rate"
+                        android:textSize="@dimen/font_measure_result_util_text" />
+                </LinearLayout>
+            </LinearLayout>
+            
+            <TextView
+                android:id="@+id/oxygen_result_details_readmeTV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/layout_oxygen_display"
+                android:layout_marginBottom="@dimen/measure_result_value_margin"
+                android:layout_marginLeft="@dimen/measure_result_value_margin"
+                android:layout_marginRight="@dimen/measure_result_value_margin"
+                android:background="@drawable/item_readme_bg"
+                android:padding="@dimen/oxygen_result_details_readme_padding"
+                android:textSize="@dimen/font_pressure_measure_change_unit" />
+
+            <RelativeLayout
+                android:id="@+id/layout_more_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/oxygen_result_details_readmeTV"
+                android:layout_marginBottom="@dimen/measure_result_value_margin"
+                android:layout_marginLeft="@dimen/measure_result_value_margin"
+                android:layout_marginRight="@dimen/measure_result_value_margin"
+                android:layout_marginTop="@dimen/measure_result_value_margin" >
+
+                <include layout="@layout/item_more_data" />
+            </RelativeLayout>
+
+            
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_below="@+id/layout_more_data"
+                android:background="@color/divider_bottom" />
+
+            <RelativeLayout
+                android:id="@+id/item_nearly_measurement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout_more_data"
+                android:layout_marginLeft="@dimen/measure_result_value_margin"
+                android:layout_marginRight="@dimen/measure_result_value_margin" >
+
+                <include layout="@layout/item_nearly_measurement" />
+            </RelativeLayout>
+
+            <com.medzone.cloud.comp.widget.CloudWebView
+                android:id="@+id/cwv_advise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_nearly_measurement" >
+            </com.medzone.cloud.comp.widget.CloudWebView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_below="@+id/cwv_advise"
+                android:background="@color/divider_bottom"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_unreachable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_nearly_measurement"
+                android:gravity="center_horizontal"
+                android:paddingBottom="@dimen/suggest_margin"
+                android:paddingTop="@dimen/suggest_margin"
+                android:text="@string/result_details_suggest_tv"
+                android:textColor="#50000000"
+                android:textSize="@dimen/font_measure_result_details_history_trend_text"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_health_advice"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_button_height"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/circlepage_margin"
+        android:background="@drawable/selector_button_public"
+        android:text="@string/get_health_assessment"
+        android:textColor="@android:color/white"
+        android:visibility="gone" />
+
+</FrameLayout>

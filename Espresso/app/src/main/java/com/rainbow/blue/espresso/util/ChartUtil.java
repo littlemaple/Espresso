@@ -1,5 +1,12 @@
 package com.rainbow.blue.espresso.util;
 
+import android.support.annotation.NonNull;
+
+import com.rainbow.blue.espresso.chart.Mode;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by blue on 2015/10/20.
  */
@@ -82,5 +89,26 @@ public class ChartUtil {
             int second = seconds % 60;
             return min + "m" + second + "s";
         }
+    }
+
+    @Deprecated
+    public static List<Integer> getSpecialLabel(float start, float end, @NonNull Mode mode) {
+        List<Integer> list = new ArrayList<>();
+        if (mode == Mode.Sec) {
+            int pre = (int) (start / (60 * 5) * 5 * 60);
+            int next = (int) (end / (60 * 5) * 5 * 60);
+            while (pre < next) {
+                list.add(pre);
+                pre += 5 * 60;
+            }
+        } else {
+            int pre = (int) (start / (60 * 60) * 60 * 60);
+            int next = (int) (end / (60 * 60) * 60 * 60);
+            while (pre < next) {
+                list.add(pre);
+                pre += 60 * 60;
+            }
+        }
+        return list;
     }
 }

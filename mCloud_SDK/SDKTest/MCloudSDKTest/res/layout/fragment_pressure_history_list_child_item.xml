@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/childlayout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/pressure_history_trend_high"
+    android:background="@drawable/selector_press_light_grey_effect"
+    android:gravity="center_vertical" >
+
+    <LinearLayout
+        android:id="@+id/ll_left_part"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/pressure_history_trend_high"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/pressure_history_list_margin"
+        android:paddingRight="@dimen/pressure_history_list_margin" >
+
+        <!--
+           android:paddingLeft="@dimen/pressure_history_list_margin"
+            android:paddingRight="@dimen/pressure_history_list_margin"
+        -->
+
+        <TextView
+            android:id="@+id/pressure_history_list_child_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22日"
+            android:layout_gravity="center"
+            android:textColor="@color/shadow_dark"
+            android:textSize="@dimen/font_pressure_history_list_big"
+            android:visibility="visible" />
+
+      
+
+        <TextView
+            android:id="@+id/pressure_history_list_child_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16:32"
+            android:layout_gravity="center"
+            android:textColor="@color/shadow_dark"
+            android:textSize="@dimen/font_pressure_history_list_time_hs"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:paddingLeft="@dimen/pressure_history_list_margin"
+        android:paddingRight="@dimen/pressure_history_list_margin"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="22日"
+            android:textColor="@color/shadow_dark"
+            android:textSize="@dimen/font_pressure_history_list_big"
+            android:visibility="visible" >
+        </TextView>
+
+    
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:text="16:32"
+            android:textColor="@color/shadow_dark"
+            android:textSize="@dimen/font_pressure_history_list_time_hs"
+            android:visibility="visible" >
+        </TextView>
+    </RelativeLayout>
+
+    <!--  -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/ll_left_part"
+        android:layout_marginLeft="@dimen/history_child_margin_left"
+        android:gravity="bottom|center_horizontal"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/pressure_history_list_child_pressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="135/182"
+            android:textColor="@color/font_history_high_priority_value"
+            android:textSize="@dimen/font_pressure_history_list_biggest" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/pressure_history_list_child_pressure_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/pressure_unit_mmhg"
+            android:textColor="@color/shadow_dark"
+            android:textSize="@dimen/font_pressure_history_list_small" />
+    </LinearLayout>
+
+    <!--  -->
+
+
+  
+    <!-- android:layout_alignBottom="@+id/ll_left_part" -->
+
+    <TextView
+        android:id="@+id/pressure_history_list_child_heart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_rate_unit"
+        android:gravity="center_horizontal|bottom"
+        android:text="150"
+        android:textColor="@color/font_history_high_priority_value"
+        android:textSize="@dimen/font_pressure_history_list_biggest" />
+
+    <TextView
+        android:id="@+id/tv_rate_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/pressure_history_list_child_heart"
+        android:paddingLeft="@dimen/oxygen_history_list_child_item_margin_left"
+        android:paddingRight="@dimen/pressure_history_list_margin"
+        android:text="@string/heart_rate_unit"
+        android:textColor="@color/shadow_dark"
+        android:textSize="@dimen/font_pressure_history_list_small" />
+
+</RelativeLayout>

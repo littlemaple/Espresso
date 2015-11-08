@@ -31,13 +31,29 @@ public class GradientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country);
         gradientView = (GradientView) findViewById(R.id.gradient_view);
-        gradientView.initData(0, 1.9f, 2.5f, 5f);
 
     }
 
-    public void setValue(View view) {
+    public void onBtn1(View view) {
+        GradientView.Range range = new GradientView.Range();
+        range.desc = new String[]{"超低","偏低", "正常偏低", "正常", "正常偏高", "偏高", "超高"};
+        range.values = new float[]{0f, 1.9f, 2f, 2.2f, 5f, 3.6f, 4, 6f};
+        range.unit = "kg";
+        range.position = new float[]{0, 0.2f, 0.4f, 0.5f, 0.7f, 0.8f, 1};
+        gradientView.setRange(range);
+    }
+
+    public void onBtn2(View view) {
+        GradientView.Range range = new GradientView.Range();
+        range.desc = new String[]{"偏低", "正常", "偏高"};
+        range.values = new float[]{0f, 1.9f, 2.5f, 6f};
+        range.unit = "kg";
+        range.position = new float[]{0, 1f / 3, 2f / 3, 1};
+        gradientView.setRange(range);
+    }
+
+    public void onBtn3(View view) {
         gradientView.setValue((float) (Math.random() * 5));
     }
-
 
 }

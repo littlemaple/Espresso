@@ -1,0 +1,56 @@
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rg_date_container"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:layerType="software"
+    android:orientation="horizontal" >
+
+    <RadioButton
+        android:id="@+id/rb_day_one"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/selector_date_picker_with_corner_left"
+        android:button="@null"
+        android:checked="true"
+        android:gravity="center"
+        android:text="@string/day_one"
+        android:textColor="@drawable/selector_bloodglucose_month_select_color" />
+
+    <RadioButton
+        android:id="@+id/rb_day_seven"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/selector_date_picker"
+        android:button="@null"
+        android:gravity="center"
+        android:text="@string/day_seven"
+        android:textColor="@drawable/selector_bloodglucose_month_select_color" />
+
+    <RadioButton
+        android:id="@+id/rb_day_forteen"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/selector_date_picker"
+        android:button="@null"
+        android:gravity="center"
+        android:text="@string/day_forteen"
+        android:textColor="@drawable/selector_bloodglucose_month_select_color" />
+
+    <RadioButton
+        android:id="@+id/rb_day_thrity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/selector_date_picker_with_corner_right"
+        android:button="@null"
+        android:gravity="center"
+        android:text="@string/day_thrity"
+        android:textColor="@drawable/selector_bloodglucose_month_select_color" />
+
+</RadioGroup>

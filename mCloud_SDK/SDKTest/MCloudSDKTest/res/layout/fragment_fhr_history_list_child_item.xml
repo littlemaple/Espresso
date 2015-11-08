@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/childlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_press_light_grey_effect"
+    android:paddingLeft="@dimen/pressure_history_list_margin"
+    android:paddingRight="@dimen/pressure_history_list_margin" >
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/pressure_history_trend_child_high"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/tv_fhr_history_list_child_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_value"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/shadow_dark"
+            android:textSize="@dimen/font_pressure_history_list_big" />
+
+        <TextView
+            android:id="@+id/tv_fhr_history_list_child_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_fhr_history_list_child_date"
+            android:text="@string/no_time"
+            android:layout_centerInParent="true"
+            android:textColor="@color/shadow_dark"
+            android:textSize="@dimen/font_pressure_history_list_small" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/tv_gest_day"
+        android:layout_toRightOf="@+id/rl"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="horizontal"
+        android:layout_centerInParent="true"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/tv_fhr_history_list_child_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/no_data"
+            android:textColor="@color/font_history_high_priority_value"
+            android:textSize="@dimen/font_pressure_history_list_biggest" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_fhr_history_list_child_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="5dp"
+            android:text="@string/heart_rate_unit"
+            android:textColor="@color/shadow_dark"
+            android:textSize="@dimen/font_pressure_history_list_small" >
+        </TextView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_gest_day"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/pressure_history_trend_child_high"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:text="@string/gestation_period"
+        android:textColor="#525f79"
+        android:textSize="@dimen/font_pressure_history_list_fetal_pre" />
+
+</RelativeLayout>

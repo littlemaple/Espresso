@@ -4,7 +4,9 @@ import android.app.Application;
 import android.graphics.PointF;
 import android.test.ApplicationTestCase;
 
+import com.rainbow.blue.espresso.chart.Mode;
 import com.rainbow.blue.espresso.chart.Series;
+import com.rainbow.blue.espresso.util.ChartUtil;
 
 import junit.framework.Assert;
 
@@ -38,6 +40,10 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         mSeriesBuffer.remove(0.1f);
         mSeriesBuffer.remove(0.6f);
         mSeriesBuffer.remove(new PointF(1.5f, 15));
+    }
+
+    public void testChart() {
+
     }
 
 }

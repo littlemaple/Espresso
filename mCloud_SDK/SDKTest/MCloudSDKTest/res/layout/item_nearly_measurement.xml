@@ -1,0 +1,168 @@
+<!-- can use merge instead of Relativelayout -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_view_health_advice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="2dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_history_trend_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_history_trend"
+        android:layout_alignParentLeft="true"
+        android:text="@string/nearly_three_times_text"
+        android:textSize="@dimen/font_measure_result_details_history_trend_text"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_history_trend"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/measure_result_details_history_trend_high"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/selector_press_effect"
+        android:drawableLeft="@drawable/detailsoftheresultsview_ic_historicaltrends"
+        android:gravity="center_vertical"
+        android:text="@string/trend_text"
+        android:textColor="@color/font_recent_history_enter"
+        android:textSize="@dimen/font_measure_result_details_history_trend_text"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divide_one"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_below="@id/tv_history_trend"
+        android:background="@color/divider_bottom" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_one_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/divide_one"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/detailsoftheresultsview_ic_time"
+        android:drawablePadding="@dimen/measure_result_details_time_margin_right"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_measure_result_details_history_trend_text" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_one_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_nearly_measurement_item_one_time"
+        android:layout_toLeftOf="@+id/tv_nearly_measurement_item_one_unit"
+        android:paddingLeft="3dp"
+        android:paddingRight="2dp"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_confirm_item"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_one_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_nearly_measurement_item_one_time"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_measure_result_details_history_trend_text"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divide_two"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_below="@id/tv_nearly_measurement_item_one_time"
+        android:background="@color/divider_bottom" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_two_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/divide_two"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/detailsoftheresultsview_ic_time"
+        android:drawablePadding="@dimen/measure_result_details_time_margin_right"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_measure_result_details_history_trend_text" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_two_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_nearly_measurement_item_two_time"
+        android:layout_toLeftOf="@+id/tv_nearly_measurement_item_two_unit"
+        android:paddingLeft="3dp"
+        android:paddingRight="2dp"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_confirm_item"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_two_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_nearly_measurement_item_two_time"
+        android:layout_alignParentRight="true"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_measure_result_details_history_trend_text"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divide_three"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:layout_below="@id/tv_nearly_measurement_item_two_time"
+        android:background="@color/divider_bottom" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_three_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/divide_three"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/detailsoftheresultsview_ic_time"
+        android:drawablePadding="@dimen/measure_result_details_time_margin_right"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_measure_result_details_history_trend_text" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_three_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_nearly_measurement_item_three_time"
+        android:layout_toLeftOf="@+id/tv_nearly_measurement_item_three_unit"
+        android:paddingLeft="3dp"
+        android:paddingRight="2dp"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_confirm_item"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_nearly_measurement_item_three_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tv_nearly_measurement_item_three_time"
+        android:layout_alignParentRight="true"
+        android:text="@string/todo"
+        android:textColor="#50000000"
+        android:textSize="@dimen/font_measure_result_details_history_trend_text"
+        android:textStyle="bold" />
+</RelativeLayout>

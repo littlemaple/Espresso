@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" >
+
+    <corners android:radius="4dp" />
+
+    <stroke
+        android:width="@dimen/divider_height"
+        android:color="#bababa" />
+
+    <solid android:color="@android:color/transparent" />
+
+    <padding
+        android:bottom="@dimen/item_empryview_margintop"
+        android:left="@dimen/circlepage_margin"
+        android:right="@dimen/circlepage_margin"
+        android:top="@dimen/item_empryview_margintop" />
+
+</shape>

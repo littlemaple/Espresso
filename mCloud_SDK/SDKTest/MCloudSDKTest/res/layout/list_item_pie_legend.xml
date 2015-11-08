@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- android:layout_height="@dimen/item_button_height" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_gravity="center_vertical"
+    android:layout_marginLeft="@dimen/service_clock_item_margin_horizal"
+    android:layout_marginRight="@dimen/service_clock_item_margin_horizal"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="3dp"
+    android:textColor="@color/font_input_dark"
+    android:weightSum="2" >
+
+    <RelativeLayout
+        android:id="@+id/rl_legend"
+        android:layout_width="15dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="2dp"
+        android:gravity="center_vertical"
+        android:minWidth="65dp"
+        android:textColor="#6c6c6c"
+        android:text="@string/todo" />
+
+    <TextView
+        android:id="@+id/tv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:gravity="center_vertical"
+        android:minWidth="30dp"
+        android:textStyle="bold"
+        android:text="@string/todo" />
+
+</LinearLayout>

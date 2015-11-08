@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:minHeight="@dimen/register_device_height"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/register_device_layout_padding_bottom"
+            android:layout_marginTop="@dimen/register_device_layout_padding_bottom"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/checkbox_device_bloodpressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_device_layout_margin_right"
+                android:background="@drawable/selector_device_bloodpressure"
+                android:button="@null" >
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/checkbox_device_bloodoxygen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_device_layout_margin_right"
+                android:background="@drawable/selector_device_oxygen"
+                android:button="@null" >
+            </CheckBox>
+<!--                  android:layout_marginRight="@dimen/register_device_layout_margin_right" -->
+
+            <CheckBox
+                android:id="@+id/checkbox_device_bloodoxygenLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_device_dynamic_oxygen"
+                android:button="@null" >
+            </CheckBox>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/register_device_layout_padding_bottom"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/checkbox_device_fetal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_device_layout_margin_right"
+                android:background="@drawable/selector_device_fetal"
+                android:button="@null" >
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/checkbox_device_fetal_movement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_device_layout_margin_right"
+                android:background="@drawable/selector_device_fetalmovement"
+                android:button="@null"
+                android:checked="false" >
+            </CheckBox>
+<!--                  android:layout_marginRight="@dimen/register_device_layout_margin_right" -->
+
+            <CheckBox
+                android:id="@+id/checkbox_device_eartemperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_device_earthermometer"
+                android:button="@null"
+                android:checked="false" >
+            </CheckBox>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/register_device_layout_padding_bottom"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/checkbox_device_bloodsugar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_device_layout_margin_right"
+                android:background="@drawable/selector_device_bloodsugar"
+                android:button="@null"
+                android:checked="false" >
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/checkbox_device_ecg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/register_device_layout_margin_right"
+                android:background="@drawable/selector_device_ecg"
+                android:button="@null"
+                android:checked="false" />
+<!--                  android:layout_marginRight="@dimen/register_device_layout_margin_right" -->
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_device_fetal"
+                android:button="@null"
+                android:checked="false"
+                android:visibility="invisible" >
+            </CheckBox>
+        </LinearLayout>
+    </LinearLayout>
+
+</merge>

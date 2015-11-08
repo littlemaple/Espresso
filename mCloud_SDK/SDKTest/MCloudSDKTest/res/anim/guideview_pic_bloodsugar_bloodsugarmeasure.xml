@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false" >
+
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_00"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_01"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_02"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_03"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_04"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_05"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_06"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_07"
+        android:duration="200"/>
+    <item
+        android:drawable="@drawable/bloodsugarmeasure_08"
+        android:duration="200"/>
+
+</animation-list>

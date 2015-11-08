@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <!-- android:visibility="visible" -->
+
+        <LinearLayout
+            android:id="@+id/oxygen_connect_in_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/oxygen_connect_margin_top"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" >
+
+                <ImageView
+                    android:id="@+id/device_oximeter_bg"
+                    android:layout_width="@dimen/oxygen_connect_equipment_width"
+                    android:layout_height="@dimen/oxygen_connect_equipment_height"
+                    android:src="@drawable/guideview_pic_equipment" />
+                <!--  -->
+
+                <FrameLayout
+                    android:id="@+id/oxygen_open_device_fl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/oxygen_connect_round_margin_left"
+                    android:paddingTop="@dimen/oxygen_connect_round_margin_top"
+                    android:visibility="gone" >
+
+                    <ImageView
+                        android:layout_width="@dimen/oxygen_connect_round_width"
+                        android:layout_height="@dimen/oxygen_connect_round_width"
+                        android:alpha="@dimen/three_tenth"
+                        android:src="@drawable/guideview_pic_equipment_large" />
+
+                    <ImageView
+                        android:layout_width="@dimen/oxygen_connect_round_width"
+                        android:layout_height="@dimen/oxygen_connect_round_width"
+                        android:alpha="@dimen/eight_tenth"
+                        android:src="@drawable/guideview_pic_equipment_small" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/device_oxygen_hander"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/guideview_pic_hand_oxygen_move" />
+            </FrameLayout>
+<!--      		android:layout_marginBottom="@dimen/pressure_connection_text_margin_top" -->
+
+            <TextView
+                android:id="@+id/oxygen_connect_textTV"
+                style="@style/SettingKeyStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/pressure_connection_text_margin_top"
+                android:layout_marginTop="@dimen/pressure_connection_text_margin_bottom"
+                android:gravity="center_horizontal"
+                android:text="@string/measure_connect_open_device_bo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="@dimen/pressure_connection_anmi_height"
+                    android:layout_height="@dimen/pressure_connection_anmi_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/guideview_ic_bluetooth" />
+
+                <ImageView
+                    android:id="@+id/oxygen_connect_flag_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/pressure_connection_anmi_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/guideview_connection_01" />
+
+                <ImageView
+                    android:layout_width="@dimen/pressure_connection_anmi_height"
+                    android:layout_height="@dimen/pressure_connection_anmi_height"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/guideview_ic_blood_oxygen" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- zzz android:layout_marginTop="@dimen/oxygen_connect_margin_top" -->
+        <!-- android:visibility="gone" -->
+
+        <LinearLayout
+            android:id="@+id/oxygen_connect_success_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/oxygen_connect_margin_top"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerInside"
+                android:src="@drawable/guide_pic_wearing_a_boot" />
+
+            <TextView
+                style="@style/SettingKeyStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/pressure_connection_success_text_margin_bottom"
+                android:layout_marginTop="@dimen/pressure_connection_success_text_margin_top"
+                android:gravity="center_horizontal"
+                android:text="@string/please_send_oximetry_clamp_fingers" />
+            <!--  -->
+
+            <TextView
+                android:id="@+id/oxygen_connect_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/oxygen_connect_success_long_margin"
+                android:gravity="center"
+                android:text="@string/open_the_long_term_care_model_text"
+                android:visibility="gone" />
+        </LinearLayout>
+<!--              android:layout_marginTop="@dimen/oxygen_connect_success_long_margin"
+-->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/oxygen_connect_start_btn"
+                android:layout_width="@dimen/pressure_connection_strat_width"
+                android:layout_height="@dimen/pressure_connection_strat_high"
+                android:background="@drawable/select_connect_start"
+                android:enabled="false"
+                android:text="@string/start"
+                android:textColor="@drawable/selector_button_textcolor"
+                android:textSize="@dimen/font_connection_start_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/constans_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/constans_version"
+        android:textColor="#c8c8c8"
+        android:textSize="11sp" />
+
+</FrameLayout>

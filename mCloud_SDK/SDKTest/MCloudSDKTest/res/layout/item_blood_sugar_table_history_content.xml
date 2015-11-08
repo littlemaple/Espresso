@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+        android:layout_height="@dimen/blood_sugar_table_history_item_inner_height"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/selector_table_gridview_item_date_bg"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#BDCBCB" />
+
+    <com.medzone.cloud.comp.widget.InterceptScrollContainer
+        android:id="@+id/scroollContainter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/tv_date"
+        android:focusable="false" >
+
+        <com.medzone.cloud.comp.widget.CustomHorizalScrollView
+            android:id="@+id/horizontalScrollView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:overScrollMode="never"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/blood_sugar_table_history_item_inner_height"
+                android:focusable="false"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_before_dawn"
+                    android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_table_gridview_content_bg"
+                    android:gravity="center"
+                    android:text="@string/todo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#525F79" />
+
+                <TextView
+                    android:id="@+id/tv_before_breakfast"
+                    android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_table_gridview_content_bg"
+                    android:gravity="center"
+                    android:text="@string/todo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#525F79" />
+
+                <TextView
+                    android:id="@+id/tv_after_breakfast"
+                    android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_table_gridview_content_bg"
+                    android:gravity="center"
+                    android:text="@string/todo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#525F79" />
+
+                <TextView
+                    android:id="@+id/tv_before_lunch"
+                    android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_table_gridview_content_bg"
+                    android:gravity="center"
+                    android:text="@string/todo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#525F79" />
+
+                <TextView
+                    android:id="@+id/tv_after_lunch"
+                    android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_table_gridview_content_bg"
+                    android:gravity="center"
+                    android:text="@string/todo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#525F79" />
+
+                <TextView
+                    android:id="@+id/tv_before_dinner"
+                    android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_table_gridview_content_bg"
+                    android:gravity="center"
+                    android:text="@string/todo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#525F79" />
+
+                <TextView
+                    android:id="@+id/tv_after_dinner"
+                    android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_table_gridview_content_bg"
+                    android:gravity="center"
+                    android:text="@string/todo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#525F79" />
+
+                <TextView
+                    android:id="@+id/tv_before_sleep"
+                    android:layout_width="@dimen/blood_sugar_table_history_item_inner_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_table_gridview_content_bg"
+                    android:gravity="center"
+                    android:text="@string/todo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#525F79" />
+            </LinearLayout>
+        </com.medzone.cloud.comp.widget.CustomHorizalScrollView>
+    </com.medzone.cloud.comp.widget.InterceptScrollContainer>
+<View 
+    android:id="@+id/view_div"
+    android:layout_width="match_parent"
+    android:layout_height="1.5dp"
+    android:visibility="gone"
+    android:background="#3ccbcf"/>
+</RelativeLayout>

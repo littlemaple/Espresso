@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/group_net_error_bg"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="@string/fetal_heart_hint"
+        android:textColor="#80000000"
+        android:textSize="@dimen/font_small_item" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="@string/fetal_heart_fre"
+                android:textColor="#40000000"
+                android:textSize="@dimen/font_measure_no_data" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" >
+
+                <TextView
+                    android:id="@+id/fetal_effective_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="right"
+                    android:text="0"
+                    android:textColor="@color/font_history_high_priority_value"
+                    android:textSize="@dimen/font_audio_measure_result_vlaue"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/fetal_effective_text"
+                    android:layout_alignBottom="@id/fetal_effective_text"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/fetal_effective_text"
+                    android:gravity="bottom"
+                    android:text="@string/times"
+                    android:textColor="#40000000"
+                    android:textSize="@dimen/font_measure_no_data" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/fetal_heart_click"
+                    android:textColor="#40000000"
+                    android:textSize="@dimen/font_measure_no_data" />
+
+                <TextView
+                    android:id="@+id/fetal_clik_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="#40000000"
+                    android:textSize="@dimen/font_measure_no_data" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <FrameLayout
+                    android:id="@+id/fl_fetal_scale"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp" >
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tv_fetal_heart_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#ffcccccc"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="@string/fm_hint"
+                    android:textSize="14sp"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/divider_bottom" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/fetal_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right|center_vertical" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_measure_complete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_fhr_record_finish"
+                    android:gravity="center"
+                    android:text="@string/completion_detection"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/font_fhr_measure_result_vlaue" />
+
+                <View
+                    android:layout_width="50dp"
+                    android:layout_height="0dp" />
+
+                <TextView
+                    android:id="@+id/tv_record_fetal_movement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableTop="@drawable/ic_fhr_recordingfetal_start"
+                    android:gravity="center"
+                    android:text="@string/record_featl"
+                    android:textColor="#80000000"
+                    android:textSize="@dimen/font_fhr_measure_result_vlaue" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

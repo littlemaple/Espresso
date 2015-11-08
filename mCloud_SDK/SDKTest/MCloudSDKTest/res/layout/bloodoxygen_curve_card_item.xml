@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/data_details"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/selector_button_group_white"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="@dimen/five_tenth"
+            android:text="@string/measure_time"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/measure_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/oxygen_history_trend_margin_left"
+            android:alpha="@dimen/five_tenth"
+            android:text="@string/no_time"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/oxygen_history_trend_margin"
+        android:layout_marginRight="@dimen/oxygen_history_trend_margin"
+        android:layout_weight="2"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/oxygen_history_trend_flagIV"
+            android:layout_width="@dimen/history_trend_image_width"
+            android:layout_height="@dimen/history_trend_image_width"
+            android:layout_marginLeft="@dimen/oxygen_history_trend_margin"
+            android:layout_marginRight="@dimen/oxygen_history_trend_margin"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/group_chat_testresult" />
+
+        <View
+            android:layout_width="@dimen/oxygen_result_details_view_width"
+            android:layout_height="@dimen/oxygen_result_details_view_heigh"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/measure_result_value_margin_right"
+            android:background="@drawable/dottedline" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/measure_result_value_margin_right"
+            android:layout_weight="1.0"
+            android:gravity="top|center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/oxygen_history_trend_oxygenTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_value"
+                android:textColor="@color/font_history_high_priority_value"
+                android:textSize="@dimen/font_measure_result_value"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="@dimen/two_tenth"
+                android:text="@string/blood_oxygen_unit"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_measure_result_util" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blood_oxygen_saturation"
+                android:textSize="@dimen/font_measure_result_util_text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/measure_result_value_margin_right"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/oxygen_history_trend_heartTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_value"
+                android:textColor="@color/font_history_low_priority_value"
+                android:textSize="@dimen/font_measure_result_value"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="@dimen/two_tenth"
+                android:text="@string/heart_rate_unit"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_measure_result_util" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/heart_rate"
+                android:textSize="@dimen/font_measure_result_util_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

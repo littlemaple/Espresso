@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 480x320登陆页面 -->
+    <dimen name="login_logo_top_up">32dp</dimen>
+    <dimen name="login_logo_bottom_down">18dp</dimen>
+    <dimen name="login_input_height">50dp</dimen>
+     <dimen name="font_confirm_item">14sp</dimen>
+
+    <!-- 首页（我的心云） -->
+    <dimen name="setting_top_item_height">70dp</dimen>
+    <dimen name="home_monthly_repory_layout_height">45dp</dimen>
+    <dimen name="home_monthly_report_layout_marginbottom">6dp</dimen>
+    <dimen name="home_data_size">15sp</dimen>
+    <dimen name="home_margin_left">8dp</dimen>
+
+    <!-- 测量-公共部分 -->
+    <dimen name="device_avatar_size">64dp</dimen>
+
+    <!-- 血压测量 -->
+    <dimen name="pressure_connection_margin_top">30dp</dimen>
+    <dimen name="pressure_connection_text_margin_top">4dp</dimen>
+    <dimen name="pressure_connection_text_margin_bottom">5dp</dimen>
+    <dimen name="pressure_connection_anmi_height">45dp</dimen>
+    <dimen name="oxygen_connect_margin_top">10dp</dimen>
+    <dimen name="pressure_measure_heart_margin_right">110dp</dimen>
+    <dimen name="pressure_measure_heart_margin_top">28dp</dimen>
+    
+    <!-- 耳温参数 -->
+    <dimen name="et_connect_margin_top">10dp</dimen>
+    <dimen name="et_connect_round_margin_left">143dp</dimen>
+    <dimen name="et_connect_round_margin_top">27dp</dimen>
+    <dimen name="et_connect_flag_text_margin_top">7dp</dimen>
+    <dimen name="et_connect_flag_text_margin_botom">10dp</dimen>
+    <dimen name="framelayout_insert_in_top">20dp</dimen>
+   
+    
+    <dimen name="pressure_connection_success_margin_top">10dp</dimen>
+    <dimen name="pressure_connection_success_text_margin_top">16dp</dimen>
+    <dimen name="pressure_connection_success_text_margin_bottom">12dp</dimen>
+
+</resources>

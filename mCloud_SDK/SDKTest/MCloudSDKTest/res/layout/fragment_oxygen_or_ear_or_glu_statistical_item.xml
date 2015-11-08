@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="10dp" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:text="最高值:"
+            android:textColor="#1d1d1d"
+            android:textSize="@dimen/chart_size1" />
+
+        <TextView
+            android:id="@+id/statistical_hight_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:text="2015-4-29 17:13:24"
+            android:textColor="#ffb1b1b1"
+            android:textSize="@dimen/chart_size2" />
+
+        <LinearLayout
+            android:id="@+id/ll_bp_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_stat_bp_max_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="190/180"
+                android:textColor="#212121"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:id="@+id/tv_stat_bp_max_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="mmhg"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+
+            <TextView
+                android:id="@+id/tv_stat_bp_max_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="110"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:id="@+id/tv_stat_bp_max_tate_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="bmp"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bs_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_bs_max_eat_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="早餐前"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:id="@+id/tv_bs_max_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="30.5"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:id="@+id/tv_bs_max_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blood_sugar_unit"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_et_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_et_max_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="36.9"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:text="@string/ear_temperature_unit"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_oxy_max"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_oxy_max_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:text="@string/blood_oxygen_unit"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+
+            <TextView
+                android:id="@+id/tv_oxy_max_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:text="@string/heart_rate_unit"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="@dimen/divider_height"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/divider_bottom" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="10dp" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="10dp"
+            android:gravity="left"
+            android:text="最低值:"
+            android:textColor="#1d1d1d"
+            android:textSize="@dimen/chart_size1" />
+
+        <TextView
+            android:id="@+id/statistical_low_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:text="2015-4-29 17:13:24"
+            android:textColor="#ffb1b1b1"
+            android:textSize="@dimen/chart_size2" />
+
+        <LinearLayout
+            android:id="@+id/ll_bp_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:paddingLeft="5dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_stat_bp_min_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="190/180"
+                android:textColor="#1e1e1e"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:id="@+id/tv_stat_bp_min_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="mmhg"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+
+            <TextView
+                android:id="@+id/tv_stat_bp_min_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="110"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:id="@+id/tv_stat_bp_min_tate_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:text="bmp"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bs_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_bs_min_eat_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:id="@+id/tv_bs_min_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="--"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:id="@+id/tv_bs_min_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/blood_sugar_unit"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_et_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_et_min_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="36.9"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:text="@string/ear_temperature_unit"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_oxy_min"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="19dp"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/tv_oxy_min_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:text="@string/blood_oxygen_unit"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+
+            <TextView
+                android:id="@+id/tv_oxy_min_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textSize="@dimen/chart_size3" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:text="@string/heart_rate_unit"
+                android:textColor="#ffb1b1b1"
+                android:textSize="@dimen/chart_size4" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

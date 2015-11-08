@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@android:color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="25dp"
+                android:alpha="@dimen/four_tenth"
+                android:text="@string/fetal_heart_rate"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_audio_measure_result_util_C" />
+
+            <TextView
+                android:id="@+id/tv_fhr_heart_reat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/no_value"
+                android:textColor="@color/font_history_high_priority_value"
+                android:textSize="@dimen/font_audio_measure_result_vlaue"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:alpha="@dimen/two_tenth"
+                android:text="@string/heart_rate_unit"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_audio_measure_result_util_C" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/divider_bottom"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/view_fetal_heart_rate_chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:orientation="horizontal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/divider_bottom" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_fh_audio" />
+
+                <com.medzone.cloud.measure.fetalheart.widget.FetalHeartWave
+                    android:id="@+id/mwv_heart_rate_wave"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/divider_bottom" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_fhr_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="00:00:00" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_fhr_start_record"
+                    android:layout_width="@dimen/pressure_connection_strat_width"
+                    android:layout_height="@dimen/pressure_connection_strat_high"
+                    android:background="@drawable/select_connect_start"
+                    android:text="@string/recording_start"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_connection_start_text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_test"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_unfind_fetal_heart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/group_net_error_bg"
+        android:gravity="center"
+        android:padding="3dp"
+        android:text="@string/fetal_heart_unfind"
+        android:textColor="#80000000"
+        android:textSize="@dimen/font_small_item" />
+
+</FrameLayout>

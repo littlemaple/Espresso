@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:overScrollMode="never"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_fm_result_details_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/measure_result_details_time_margin_bottom"
+            android:layout_marginLeft="@dimen/measure_result_details_time_margin_left"
+            android:layout_marginRight="@dimen/measure_result_details_time_margin_right"
+            android:layout_marginTop="@dimen/measure_result_details_time_margin_top"
+            android:drawableLeft="@drawable/detailsoftheresultsview_ic_time"
+            android:drawablePadding="@dimen/measure_result_details_time_margin_right"
+            android:textColor="#50000000" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <FrameLayout
+                android:id="@+id/fl_fetal_scale"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/divider_height"
+            android:background="@color/divider_bottom" />
+
+        <!-- 该控件的字体需要设置float类型，设置后内部会根据屏幕密度自动转换 -->
+
+        <com.medzone.cloud.comp.widget.AdaptiveTextGroup
+            android:id="@+id/wrap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            app:horizal_margin="6dp"
+            app:horizal_padding="5dp"
+            app:key_font_size="14"
+            app:value_font_size="14"
+            app:vertical_margin="2dp"
+            app:vertical_padding="2dp" >
+        </com.medzone.cloud.comp.widget.AdaptiveTextGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/featl_time"
+                    android:textColor="#20000000"
+                    android:textSize="@dimen/font_measure_result_util_text" />
+
+                <TextView
+                    android:id="@+id/tv_fm_mesure_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:00"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/font_measure_result_util_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/effective_fetal"
+                    android:textColor="#20000000"
+                    android:textSize="@dimen/font_measure_result_util_text" />
+
+                <TextView
+                    android:id="@+id/tv_fm_effective_times"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_value"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/font_measure_result_util_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fetal_click"
+                    android:textColor="#20000000"
+                    android:textSize="@dimen/font_measure_result_util_text" />
+
+                <TextView
+                    android:id="@+id/tv_fm_click_times"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_value"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/font_measure_result_util_text" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/measure_result_value_high"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/measure_result_value_margin"
+            android:background="@drawable/item_bg_blood"
+            android:gravity="center_horizontal|center_vertical" >
+
+            <!-- android:layout_alignBaseline="@+id/tv_fm_avg_times_result_details_etTV" -->
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_fm_avg_times"
+                android:layout_alignBottom="@+id/tv_fm_avg_times"
+                android:layout_toRightOf="@+id/tv_fm_avg_times"
+                android:text="@string/fetal_unit"
+                android:textColor="#20000000"
+                android:textSize="@dimen/font_audio_measure_result_util_mmol" />
+
+            <TextView
+                android:id="@+id/bs_result_eat_etTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_fm_avg_times"
+                android:layout_alignBottom="@+id/tv_fm_avg_times"
+                android:layout_toLeftOf="@+id/tv_fm_avg_times"
+                android:hint="@string/fetal_average"
+                android:textColor="@color/font_history_high_priority_value"
+                android:textSize="@dimen/font_blood_sugar_measure_result_vlaue"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_fm_avg_times"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:hint="@string/no_value"
+                android:textColor="@color/font_history_high_priority_value"
+                android:textSize="@dimen/font_audio_measure_result_vlaue"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/measure_result_value_margin"
+            android:layout_marginRight="@dimen/measure_result_value_margin"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/item_readme_bg"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/tv_fhr_result_details_remark"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/oxygen_result_details_readme_margin"
+                android:background="@drawable/item_et_bg"
+                android:hint="@string/add_note"
+                android:padding="@dimen/oxygen_result_details_readme_padding"
+                android:textSize="@dimen/font_pressure_measure_change_unit" />
+        </LinearLayout>
+        <!-- 插入开始 -->
+
+        <RelativeLayout
+            android:id="@+id/layout_more_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_fhr_result_details_remark"
+            android:layout_marginBottom="@dimen/measure_result_value_margin"
+            android:layout_marginLeft="@dimen/measure_result_value_margin"
+            android:layout_marginRight="@dimen/measure_result_value_margin"
+            android:layout_marginTop="20dp" >
+
+            <include layout="@layout/item_more_data" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/item_nearly_measurement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/measure_result_value_margin"
+            android:layout_marginRight="@dimen/measure_result_value_margin" >
+
+            <include layout="@layout/item_nearly_measurement" />
+        </RelativeLayout>
+        <!-- 结束 -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/suggest_margin" >
+
+            <com.medzone.cloud.comp.widget.CloudWebView
+                android:id="@+id/cwv_fm_result_details_suggest"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </com.medzone.cloud.comp.widget.CloudWebView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/divider_bottom"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_fm_result_details_suggest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="@dimen/suggest_margin"
+                android:text="@string/result_details_suggest_tv"
+                android:textColor="#50000000"
+                android:textSize="@dimen/font_measure_result_details_history_trend_text"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

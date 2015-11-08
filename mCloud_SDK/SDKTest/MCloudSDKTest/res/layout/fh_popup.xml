@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="50dp"
+        android:src="@drawable/fhr_popup_triangle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/fhr_bg_popup"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/fh_detection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/fetal_popup_selector"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="胎心检测"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_action_title_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="3dp"
+            android:background="#ff3b9ea0" />
+
+        <TextView
+            android:id="@+id/fm_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/fetal_popup_selector"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="胎动记录"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_action_title_size" />
+    </LinearLayout>
+
+</LinearLayout>
