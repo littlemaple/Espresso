@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\pre-dexed\debug\classes-45b0e16f9816ac440a5644c2af3784da7f2f5077.jar" />
+    </item>
+    <item
+        jar="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\exploded-aar\com.android.support\design\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e5c61a3169221a89654ffcaaed47bba51cf071ad">
+        <dex dex="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\pre-dexed\debug\classes-3e445ff43f30a76ae847149ffc900449b25d112f.jar" />
+    </item>
+    <item
+        jar="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-6fb85fdc981aad8638d392a4f316c1cadcd6dbef.jar" />
+    </item>
+    <item
+        jar="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\pre-dexed\debug\classes-2fca5a07cca4eb3f68b75fc955b710b55278c5aa.jar" />
+    </item>
+    <item
+        jar="D:\program\Android_SDK\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="D:\workplace\AndroidStudio\github\MyApplication\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-efe7c2a928703f947a764b321be4c4e2df06351f.jar" />
+    </item>
+
+</items>
